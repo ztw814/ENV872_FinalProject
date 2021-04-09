@@ -1,0 +1,80 @@
+---
+title: "Working_File"
+author: "Zoe Wong"
+date: "4/9/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Setup
+
+```{r setup}
+getwd()
+library(tidyverse)
+
+survey.dat <- read.csv("./AquacultureSurveyData.csv")
+survey.codes <- read.csv("./AquacultureSurveyCodes.csv")
+```
+
+
+## Basic overview questions
+
+1. Make a dataframe just for species-related data - general analysis
+      -> work w/ separate dataframes for each type of data (frequency, form, etc)?
+      -> only use Tuna:Oysters since no category but frequency asks about raw forms
+      -> omit Frequency_General - can analyze separately if necessary
+2. Find frequency of each response
+3. General overview questions:  
+      *What are the most common species consumed?
+      *Where do people get their seafood?  
+      *How do people prefer to buy their seafood?
+      *Do people prefer wild-caught or farmed seafood?
+
+```{r frequency} 
+
+```
+
+
+```{r where}
+where.sp <- select(survey.dat, Where_Tuna:Where_Oysters)
+
+where.sp.Tuna <- as.data.frame(table(where.sp$Where_Tuna))
+where.sp.Shrimp <- as.data.frame(table(where.sp$Where_Shrimp))
+where.sp.Salmon <- as.data.frame(table(where.sp$Where_Salmon))
+where.sp.Flounder <- as.data.frame(table(where.sp$Where_Flounder))
+where.sp.BlueCrab <- as.data.frame(table(where.sp$Where_BlueCrab))
+where.sp.Clams <- as.data.frame(table(where.sp$Where_Clams))
+where.sp.Mullet <- as.data.frame(table(where.sp$Where_Mullet))
+where.sp.Oysters <- as.data.frame(table(where.sp$Where_Oysters))
+
+where.sp.summary <- where.sp.Tuna %>% 
+  left_join(where.sp.Shrimp, by = "Var1") %>% 
+  left_join(where.sp.Salmon, by = "Var1") %>% 
+  left_join(where.sp.Flounder, by = "Var1") %>% 
+  left_join(where.sp.BlueCrab, by = "Var1") %>% 
+  left_join(where.sp.Clams, by = "Var1") %>% 
+  left_join(where.sp.Mullet, by = "Var1") %>% 
+  left_join(where.sp.Oysters, by = "Var1")
+where.sp.summary <- where.sp.summary %>% 
+  rename(Response = Var1,
+         Tuna = Freq.x,
+         Shrimp = Freq.y,
+         Salmon = Freq.x.x,
+         Flounder = Freq.y.y,
+         BlueCrab = Freq.x.x.x,
+         Clams = Freq.y.y.y,
+         Mullet = Freq.x.x.x.x,
+         Oysters = Freq.y.y.y.y)
+
+```
+
+
+## Attitude analysis
+
+```{r}
+
+```
+
