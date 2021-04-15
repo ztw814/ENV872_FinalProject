@@ -82,7 +82,7 @@ freq.sp.summary$Response_Explanation <- freq.response.meaning
 ```
 
 ```{r How Often Plot}
-ggplot(freq.sp.summary,aes(x=Response, y=Tuna)) + 
+ggplot(freq.sp.summary,aes(y=Response_Explanation, x=Tuna)) + 
   geom_point() + 
   labs(title ="In the past year, how often did you eat Tuna?",
        y="Count of Response Type",
@@ -134,7 +134,7 @@ where.sp.summary$Response_Explanation <- where.response.meaning
 ```
 
 ```{r Where Plot}
-ggplot(where.sp.summary,aes(x=Response, y=Tuna)) + 
+ggplot(where.sp.summary,aes(y=Response_Explanation, x=Tuna)) + 
   geom_point() + 
   labs(title ="Tuna: Where do you get your seafood?",
        y="Count of Response Type",
