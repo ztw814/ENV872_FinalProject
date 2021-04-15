@@ -43,6 +43,16 @@ theme_set(mytheme)
 
 ```
 
+## Notes on below 
+
+1. Caught or grown myself 
+2. Caught or grown by a friend or family member 
+3. Grocery store 
+4. Restaurant 
+5. Seafood market 
+6. Commercial fisherman or seafood farmer 
+7. Community-supported fishery (CSF)
+8. Other 
 
 ```{r where}
 where.sp <- select(survey.dat, Where_Tuna:Where_Oysters)
@@ -75,6 +85,12 @@ where.sp.summary <- where.sp.summary %>%
          Mullet = Freq.x.x.x.x,
          Oysters = Freq.y.y.y.y)
 
+ggplot(where.sp.summary,aes(x=Response,y=maximum_withdrawl_MGD)) + 
+  geom_point() + 
+  labs(title ="",
+       y="",
+       x="") + 
+  theme(plot.title = element_text(hjust=0.5))
 ```
 
 
