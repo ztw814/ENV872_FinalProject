@@ -81,16 +81,6 @@ freq.response.meaning <- c("Never",
 freq.sp.summary$Response_Explanation <- freq.response.meaning
 ```
 
-## Notes on responses 
-
-0. Never 
-1. Once in the past year 
-2. A few times in the past year 
-3. Once a month 
-4. A few times every month 
-5. Once a week 
-6. A few times a week 
-
 ```{r How Often Plot}
 ggplot(freq.sp.summary,aes(x=Response, y=Tuna)) + 
   geom_point() + 
@@ -130,18 +120,18 @@ where.sp.summary <- where.sp.summary %>%
          Clams = Freq.y.y.y,
          Mullet = Freq.x.x.x.x,
          Oysters = Freq.y.y.y.y)
+
+where.response.meaning <- c("Caught or grown myself", 
+                           "Caught or grown by a friend or family member", 
+                           "Grocery store",
+                           "Restaurant",
+                           "Seafood market",
+                           "Commercial fisherman or seafood farmer",
+                           "Community-supported fishery (CSF)",
+                           "Other")
+
+where.sp.summary$Response_Explanation <- where.response.meaning
 ```
-
-## Notes on responses 
-
-1. Caught or grown myself 
-2. Caught or grown by a friend or family member 
-3. Grocery store 
-4. Restaurant 
-5. Seafood market 
-6. Commercial fisherman or seafood farmer 
-7. Community-supported fishery (CSF)
-8. Other
 
 ```{r Where Plot}
 ggplot(where.sp.summary,aes(x=Response, y=Tuna)) + 
