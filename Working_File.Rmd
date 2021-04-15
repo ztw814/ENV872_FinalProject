@@ -17,6 +17,12 @@ library(tidyverse)
 
 survey.dat <- read.csv("./AquacultureSurveyData.csv")
 survey.codes <- read.csv("./AquacultureSurveyCodes.csv")
+
+# Set ggplot theme
+mytheme <- theme_classic() +
+  theme(axis.text = element_text(color = "black"), 
+        legend.position = "top")
+theme_set(mytheme)
 ```
 
 
