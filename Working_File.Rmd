@@ -40,19 +40,55 @@ theme_set(mytheme)
       *Do people prefer wild-caught or farmed seafood?
 
 ```{r frequency} 
+freq.sp <- select(survey.dat, Frequency_Tuna:Frequency_Oysters)
 
+freq.sp.Tuna <- as.data.frame(table(freq.sp$Frequency_Tuna))
+freq.sp.Shrimp <- as.data.frame(table(freq.sp$Frequency_Shrimp))
+freq.sp.Salmon <- as.data.frame(table(freq.sp$Frequency_Salmon))
+freq.sp.Flounder <- as.data.frame(table(freq.sp$Frequency_Flounder))
+freq.sp.BlueCrab <- as.data.frame(table(freq.sp$Frequency_BlueCrab))
+freq.sp.Clams <- as.data.frame(table(freq.sp$Frequency_Clams))
+freq.sp.Mullet <- as.data.frame(table(freq.sp$Frequency_Mullet))
+freq.sp.Oysters <- as.data.frame(table(freq.sp$Frequency_Oysters))
+
+freq.sp.summary <- freq.sp.Tuna %>% 
+  left_join(freq.sp.Shrimp, by = "Var1") %>% 
+  left_join(freq.sp.Salmon, by = "Var1") %>% 
+  left_join(freq.sp.Flounder, by = "Var1") %>% 
+  left_join(freq.sp.BlueCrab, by = "Var1") %>% 
+  left_join(freq.sp.Clams, by = "Var1") %>% 
+  left_join(freq.sp.Mullet, by = "Var1") %>% 
+  left_join(freq.sp.Oysters, by = "Var1")
+freq.sp.summary <- freq.sp.summary %>% 
+  rename(Response = Var1,
+         Tuna = Freq.x,
+         Shrimp = Freq.y,
+         Salmon = Freq.x.x,
+         Flounder = Freq.y.y,
+         BlueCrab = Freq.x.x.x,
+         Clams = Freq.y.y.y,
+         Mullet = Freq.x.x.x.x,
+         Oysters = Freq.y.y.y.y)
 ```
 
-## Notes on below 
+## Notes on responses 
 
-1. Caught or grown myself 
-2. Caught or grown by a friend or family member 
-3. Grocery store 
-4. Restaurant 
-5. Seafood market 
-6. Commercial fisherman or seafood farmer 
-7. Community-supported fishery (CSF)
-8. Other 
+0. Never 
+1. Once in the past year 
+2. A few times in the past year 
+3. Once a month 
+4. A few times every month 
+5. Once a week 
+6. A few times a week 
+
+```{r How Often Plot}
+ggplot(freq.sp.summary,aes(x=Response, y=Tuna)) + 
+  geom_point() + 
+  labs(title ="In the past year, how often did you eat Tuna?",
+       y="Count of Response Type",
+       x="Response") + 
+  theme(plot.title = element_text(hjust=0.5))
+```
 
 ```{r where}
 where.sp <- select(survey.dat, Where_Tuna:Where_Oysters)
@@ -84,12 +120,25 @@ where.sp.summary <- where.sp.summary %>%
          Clams = Freq.y.y.y,
          Mullet = Freq.x.x.x.x,
          Oysters = Freq.y.y.y.y)
+```
 
-ggplot(where.sp.summary,aes(x=Response,y=maximum_withdrawl_MGD)) + 
+## Notes on responses 
+
+1. Caught or grown myself 
+2. Caught or grown by a friend or family member 
+3. Grocery store 
+4. Restaurant 
+5. Seafood market 
+6. Commercial fisherman or seafood farmer 
+7. Community-supported fishery (CSF)
+8. Other
+
+```{r Where Plot}
+ggplot(where.sp.summary,aes(x=Response, y=Tuna)) + 
   geom_point() + 
-  labs(title ="",
-       y="",
-       x="") + 
+  labs(title ="Tuna: Where do you get your seafood?",
+       y="Count of Response Type",
+       x="Response") + 
   theme(plot.title = element_text(hjust=0.5))
 ```
 
