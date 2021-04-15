@@ -69,6 +69,16 @@ freq.sp.summary <- freq.sp.summary %>%
          Clams = Freq.y.y.y,
          Mullet = Freq.x.x.x.x,
          Oysters = Freq.y.y.y.y)
+
+freq.response.meaning <- c("Never", 
+                           "Once in the past year", 
+                           "A few times in the past year",
+                           "Once a month",
+                           "A few times every month",
+                           "Once a week",
+                           "A few times a week")
+
+freq.sp.summary$Response_Explanation <- freq.response.meaning
 ```
 
 ## Notes on responses 
