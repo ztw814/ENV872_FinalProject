@@ -275,4 +275,3 @@ ggplot(qual.sp.summary.long, aes(y=Response_Explanation, x=value)) +
         plot.title = element_text(hjust=0.5))
 ```
 
-```{r better plotting practice 2}
