@@ -25,7 +25,6 @@ mytheme <- theme_classic() +
 theme_set(mytheme)
 ```
 
-
 ## Basic overview questions
 
 1. Make a dataframe just for species-related data - general analysis
@@ -246,3 +245,23 @@ ggplot(qual.sp.summary,aes(y=Response_Explanation, x=Healthy)) +
   theme(plot.title = element_text(hjust=0.5))
 ```
 
+```{r better plotting practice 2}
+
+#load necessary libraries
+library(ggplot2)
+library(reshape2)
+
+#melt data frame into long format
+qual.sp.summary.long <- melt(qual.sp.summary,  id.vars = 'Response_Explanation', variable.name = 'series')
+qual.sp.summary.long <- qual.sp.summary.long[-c(1, 2, 3, 4, 5), ]
+qual.sp.summary.long$value <- as.numeric(qual.sp.summary.long$value)
+
+#create line plot for each column in data frame
+ggplot(qual.sp.summary.long, aes(y=Response_Explanation, x=value)) +
+  geom_point(aes(colour = series)) + 
+  labs(title ="Quality associations with different seafood types",
+       x="Count of Response Type",
+       y="Response") + 
+  theme(axis.text.x = element_text(angle = 90), 
+        plot.title = element_text(hjust=0.5))
+```
