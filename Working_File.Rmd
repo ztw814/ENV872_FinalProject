@@ -79,14 +79,12 @@ freq.response.meaning <- c("Never",
                            "A few times a week")
 
 freq.sp.summary$Response_Explanation <- freq.response.meaning
-```
 
-```{r How Often Plot}
 ggplot(freq.sp.summary,aes(y=Response_Explanation, x=Tuna)) + 
   geom_point() + 
   labs(title ="In the past year, how often did you eat Tuna?",
-       y="Count of Response Type",
-       x="Response") + 
+       x="Count of Response Type",
+       y="Response") + 
   theme(plot.title = element_text(hjust=0.5))
 ```
 
@@ -131,18 +129,16 @@ where.response.meaning <- c("Caught or grown myself",
                            "Other")
 
 where.sp.summary$Response_Explanation <- where.response.meaning
-```
 
-```{r Where Plot}
 ggplot(where.sp.summary,aes(y=Response_Explanation, x=Tuna)) + 
   geom_point() + 
   labs(title ="Tuna: Where do you get your seafood?",
-       y="Count of Response Type",
-       x="Response") + 
+       x="Count of Response Type",
+       y="Response") + 
   theme(plot.title = element_text(hjust=0.5))
 ```
 
-## Attitude analysis
+## Preference analysis
 
 ```{r preference}
 pref.sp <- select(survey.dat, Preference_Tuna:Preference_Oysters)
@@ -183,17 +179,16 @@ pref.response.meaning <- c("Strongly prefer wild caught",
                            "I don't know")
 
 pref.sp.summary$Response_Explanation <- pref.response.meaning
-```
 
-```{r preference Plot}
 ggplot(pref.sp.summary,aes(y=Response_Explanation, x=Tuna)) + 
   geom_point() + 
   labs(title ="Do you prefer wild caught or farmed Tuna?",
-       y="Count of Response Type",
-       x="Response") + 
+       x="Count of Response Type",
+       y="Response") + 
   theme(plot.title = element_text(hjust=0.5))
 ```
 
+## Qualities analysis 
 
 ```{r qualities}
 qual.sp <- select(survey.dat, Qualities_Healthy:Qualities_Fresh)
@@ -236,20 +231,18 @@ qual.sp.summary <- qual.sp.summary %>%
          Fresh = Freq)
 
 qual.response.meaning <- c("More associated with wild caught", 
-                           "Equally associated with wild caught and farmed", 
+                           "Equally associated w/ wild caught & farmed", 
                            "More associated with farmed",
-                           "Associated with neither wild caught nor farmed",
+                           "Associated w/ neither wild caught nor farmed",
                            "I don't know")
 
 qual.sp.summary$Response_Explanation <- qual.response.meaning
-```
 
-```{r qualities Plot}
 ggplot(qual.sp.summary,aes(y=Response_Explanation, x=Healthy)) + 
   geom_point() + 
   labs(title ="How do you associate healthy with different seafood types?",
-       y="Count of Response Type",
-       x="Response") + 
+       x="Count of Response Type",
+       y="Response") + 
   theme(plot.title = element_text(hjust=0.5))
 ```
 
