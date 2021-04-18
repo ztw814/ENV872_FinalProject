@@ -142,8 +142,58 @@ ggplot(where.sp.summary,aes(y=Response_Explanation, x=Tuna)) +
   theme(plot.title = element_text(hjust=0.5))
 ```
 
-
 ## Attitude analysis
+
+```{r preference}
+pref.sp <- select(survey.dat, Preference_Tuna:Preference_Oysters)
+
+pref.sp.Tuna <- as.data.frame(table(pref.sp$Preference_Tuna))
+pref.sp.Shrimp <- as.data.frame(table(pref.sp$Preference_Shrimp))
+pref.sp.Salmon <- as.data.frame(table(pref.sp$Preference_Salmon))
+pref.sp.Flounder <- as.data.frame(table(pref.sp$Preference_Flounder))
+pref.sp.BlueCrab <- as.data.frame(table(pref.sp$Preference_BlueCrab))
+pref.sp.Clams <- as.data.frame(table(pref.sp$Preference_Clams))
+pref.sp.Mullet <- as.data.frame(table(pref.sp$Preference_Mullet))
+pref.sp.Oysters <- as.data.frame(table(pref.sp$Preference_Oysters))
+
+pref.sp.summary <- pref.sp.Tuna %>% 
+  left_join(pref.sp.Shrimp, by = "Var1") %>% 
+  left_join(pref.sp.Salmon, by = "Var1") %>% 
+  left_join(pref.sp.Flounder, by = "Var1") %>% 
+  left_join(pref.sp.BlueCrab, by = "Var1") %>% 
+  left_join(pref.sp.Clams, by = "Var1") %>% 
+  left_join(pref.sp.Mullet, by = "Var1") %>% 
+  left_join(pref.sp.Oysters, by = "Var1")
+pref.sp.summary <- pref.sp.summary %>% 
+  rename(Response = Var1,
+         Tuna = Freq.x,
+         Shrimp = Freq.y,
+         Salmon = Freq.x.x,
+         Flounder = Freq.y.y,
+         BlueCrab = Freq.x.x.x,
+         Clams = Freq.y.y.y,
+         Mullet = Freq.x.x.x.x,
+         Oysters = Freq.y.y.y.y)
+
+pref.response.meaning <- c("Strongly prefer wild caught", 
+                           "Slightly prefer wild caught", 
+                           "No preference",
+                           "Slightly prefer farmed",
+                           "Strongly prefer farmed",
+                           "I don't know")
+
+pref.sp.summary$Response_Explanation <- pref.response.meaning
+```
+
+```{r preference Plot}
+ggplot(pref.sp.summary,aes(y=Response_Explanation, x=Tuna)) + 
+  geom_point() + 
+  labs(title ="Do you prefer wild caught or farmed Tuna?",
+       y="Count of Response Type",
+       x="Response") + 
+  theme(plot.title = element_text(hjust=0.5))
+```
+
 
 ```{r qualities}
 qual.sp <- select(survey.dat, Qualities_Healthy:Qualities_Fresh)
