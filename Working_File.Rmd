@@ -145,7 +145,61 @@ ggplot(where.sp.summary,aes(y=Response_Explanation, x=Tuna)) +
 
 ## Attitude analysis
 
-```{r}
+```{r qualities}
+qual.sp <- select(survey.dat, Qualities_Healthy:Qualities_Fresh)
 
+qual.sp.Healthy <- as.data.frame(table(qual.sp$Qualities_Healthy))
+qual.sp.Local <- as.data.frame(table(qual.sp$Qualities_Local))
+qual.sp.Safe <- as.data.frame(table(qual.sp$Qualities_Safe))
+qual.sp.Local_Economies <- as.data.frame(table(qual.sp$Qualities_Local_Economies))
+qual.sp.Tasty <- as.data.frame(table(qual.sp$Qualities_Tasty))
+qual.sp.Affordable <- as.data.frame(table(qual.sp$Qualities_Affordable))
+qual.sp.Local_Culture <- as.data.frame(table(qual.sp$Qualities_Local_Culture))
+qual.sp.Sustainable <- as.data.frame(table(qual.sp$Qualities_Sustainable))
+qual.sp.Easy_Access <- as.data.frame(table(qual.sp$Qualities_Easy_Access))
+qual.sp.Local_Environments <- as.data.frame(table(qual.sp$Qualities_Local_Environments))
+qual.sp.Fresh <- as.data.frame(table(qual.sp$Qualities_Fresh))
+
+qual.sp.summary <- qual.sp.Healthy %>% 
+  left_join(qual.sp.Local, by = "Var1") %>% 
+  left_join(qual.sp.Safe, by = "Var1") %>% 
+  left_join(qual.sp.Local_Economies, by = "Var1") %>% 
+  left_join(qual.sp.Tasty, by = "Var1") %>% 
+  left_join(qual.sp.Affordable, by = "Var1") %>% 
+  left_join(qual.sp.Local_Culture, by = "Var1") %>% 
+  left_join(qual.sp.Sustainable, by = "Var1") %>%
+  left_join(qual.sp.Easy_Access, by = "Var1") %>%
+  left_join(qual.sp.Local_Environments, by = "Var1") %>%
+  left_join(qual.sp.Fresh, by = "Var1")
+qual.sp.summary <- qual.sp.summary %>% 
+  rename(Response = Var1,
+         Healthy = Freq.x,
+         Local = Freq.y,
+         Safe = Freq.x.x,
+         LocalEconomies = Freq.y.y,
+         Tasty = Freq.x.x.x,
+         Affordable = Freq.y.y.y,
+         LocalCulture = Freq.x.x.x.x,
+         Sustainable = Freq.y.y.y.y,
+         EasyAccess = Freq.x.x.x.x.x,
+         LocalEnvironments = Freq.y.y.y.y.y,
+         Fresh = Freq)
+
+qual.response.meaning <- c("More associated with wild caught", 
+                           "Equally associated with wild caught and farmed", 
+                           "More associated with farmed",
+                           "Associated with neither wild caught nor farmed",
+                           "I don't know")
+
+qual.sp.summary$Response_Explanation <- qual.response.meaning
+```
+
+```{r qualities Plot}
+ggplot(qual.sp.summary,aes(y=Response_Explanation, x=Healthy)) + 
+  geom_point() + 
+  labs(title ="How do you associate healthy with different seafood types?",
+       y="Count of Response Type",
+       x="Response") + 
+  theme(plot.title = element_text(hjust=0.5))
 ```
 
