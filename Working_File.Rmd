@@ -14,6 +14,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r setup}
 getwd()
 library(tidyverse)
+library(ggplot2)
+library(reshape2)
 
 survey.dat <- read.csv("./AquacultureSurveyData.csv")
 survey.codes <- read.csv("./AquacultureSurveyCodes.csv")
@@ -79,12 +81,19 @@ freq.response.meaning <- c("Never",
 
 freq.sp.summary$Response_Explanation <- freq.response.meaning
 
-ggplot(freq.sp.summary,aes(y=Response_Explanation, x=Tuna)) + 
-  geom_point() + 
-  labs(title ="In the past year, how often did you eat Tuna?",
+#melt data frame into long format
+freq.sp.summary.long <- melt(freq.sp.summary,  id.vars = 'Response_Explanation', variable.name = 'series')
+freq.sp.summary.long <- freq.sp.summary.long[-c(1, 2, 3, 4, 5, 6, 7), ]
+freq.sp.summary.long$value <- as.numeric(freq.sp.summary.long$value)
+
+#create plot for each column in data frame
+ggplot(freq.sp.summary.long, aes(y=Response_Explanation, x=value)) +
+  geom_point(aes(colour = series)) + 
+  labs(title ="How often do you eat different seafood types",
        x="Count of Response Type",
        y="Response") + 
-  theme(plot.title = element_text(hjust=0.5))
+  theme(axis.text.x = element_text(angle = 90), 
+        plot.title = element_text(hjust=0.5))
 ```
 
 ```{r where}
@@ -129,12 +138,19 @@ where.response.meaning <- c("Caught or grown myself",
 
 where.sp.summary$Response_Explanation <- where.response.meaning
 
-ggplot(where.sp.summary,aes(y=Response_Explanation, x=Tuna)) + 
-  geom_point() + 
-  labs(title ="Tuna: Where do you get your seafood?",
+#melt data frame into long format
+where.sp.summary.long <- melt(where.sp.summary,  id.vars = 'Response_Explanation', variable.name = 'series')
+where.sp.summary.long <- where.sp.summary.long[-c(1, 2, 3, 4, 5, 6, 7, 8), ]
+where.sp.summary.long$value <- as.numeric(where.sp.summary.long$value)
+
+#create plot for each column in data frame
+ggplot(where.sp.summary.long, aes(y=Response_Explanation, x=value)) +
+  geom_point(aes(colour = series)) + 
+  labs(title ="Where do you get your seafood?",
        x="Count of Response Type",
        y="Response") + 
-  theme(plot.title = element_text(hjust=0.5))
+  theme(axis.text.x = element_text(angle = 90), 
+        plot.title = element_text(hjust=0.5))
 ```
 
 ## Preference analysis
@@ -179,12 +195,19 @@ pref.response.meaning <- c("Strongly prefer wild caught",
 
 pref.sp.summary$Response_Explanation <- pref.response.meaning
 
-ggplot(pref.sp.summary,aes(y=Response_Explanation, x=Tuna)) + 
-  geom_point() + 
-  labs(title ="Do you prefer wild caught or farmed Tuna?",
+#melt data frame into long format
+pref.sp.summary.long <- melt(pref.sp.summary,  id.vars = 'Response_Explanation', variable.name = 'series')
+pref.sp.summary.long <- pref.sp.summary.long[-c(1, 2, 3, 4, 5, 6), ]
+pref.sp.summary.long$value <- as.numeric(pref.sp.summary.long$value)
+
+#create plot for each column in data frame
+ggplot(pref.sp.summary.long, aes(y=Response_Explanation, x=value)) +
+  geom_point(aes(colour = series)) + 
+  labs(title ="Wild caught vs farmed preferences for different seafood types",
        x="Count of Response Type",
        y="Response") + 
-  theme(plot.title = element_text(hjust=0.5))
+  theme(axis.text.x = element_text(angle = 90), 
+        plot.title = element_text(hjust=0.5))
 ```
 
 ## Qualities analysis 
@@ -237,26 +260,12 @@ qual.response.meaning <- c("More associated with wild caught",
 
 qual.sp.summary$Response_Explanation <- qual.response.meaning
 
-ggplot(qual.sp.summary,aes(y=Response_Explanation, x=Healthy)) + 
-  geom_point() + 
-  labs(title ="How do you associate healthy with different seafood types?",
-       x="Count of Response Type",
-       y="Response") + 
-  theme(plot.title = element_text(hjust=0.5))
-```
-
-```{r better plotting practice 2}
-
-#load necessary libraries
-library(ggplot2)
-library(reshape2)
-
 #melt data frame into long format
 qual.sp.summary.long <- melt(qual.sp.summary,  id.vars = 'Response_Explanation', variable.name = 'series')
 qual.sp.summary.long <- qual.sp.summary.long[-c(1, 2, 3, 4, 5), ]
 qual.sp.summary.long$value <- as.numeric(qual.sp.summary.long$value)
 
-#create line plot for each column in data frame
+#create plot for each column in data frame
 ggplot(qual.sp.summary.long, aes(y=Response_Explanation, x=value)) +
   geom_point(aes(colour = series)) + 
   labs(title ="Quality associations with different seafood types",
@@ -265,3 +274,5 @@ ggplot(qual.sp.summary.long, aes(y=Response_Explanation, x=value)) +
   theme(axis.text.x = element_text(angle = 90), 
         plot.title = element_text(hjust=0.5))
 ```
+
+```{r better plotting practice 2}
