@@ -39,3 +39,5 @@ where.sp.fun <- function(col, df) {
 
 col <- c("Where_Shrimp", "Where_Salmon", "Where_Flounder", "Where_BlueCrab", "Where_Clams", "Where_Mullet", "Where_Oysters")
 where.sp.fun(col, where.sp)
+
+freq.sp.summary.long$Response_Explanation <- factor(freq.sp.summary.long$Response_Explanation, levels = freq.sp.summary.long$Response_Explanation[order(c("Never", "Once in the past year", "A few times in the past year", "Once a month", "A few times every month", "Once a week", "A few times a week"))])

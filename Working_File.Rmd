@@ -89,12 +89,41 @@ freq.sp.summary.long$value <- as.numeric(freq.sp.summary.long$value)
 #create plot for each column in data frame
 ggplot(freq.sp.summary.long, aes(y=Response_Explanation, x=value)) +
   geom_point(aes(colour = series)) + 
-  labs(title ="How often do you eat different seafood types",
-       x="Count of Response Type",
-       y="Response") + 
+  labs(title ="How often do you eat different seafood types?",
+       x="Number of responses",
+       y="Response",
+       color = "Type") + 
   theme(axis.text.x = element_text(angle = 90), 
         plot.title = element_text(hjust=0.5))
+
+#analyze which species are eaten most frequently
+freq.sp.summary$Response <- as.numeric(freq.sp.summary$Response)
+freq.sp.summary.which <- freq.sp.summary %>% 
+  mutate(Tuna.freq = Tuna * Response,
+         Shrimp.freq = Shrimp * Response,
+         Salmon.freq = Salmon * Response,
+         Flounder.freq = Flounder * Response,
+         BlueCrab.freq = BlueCrab * Response,
+         Clams.freq = Clams * Response,
+         Mullet.freq = Mullet * Response,
+         Oysters.freq = Oysters * Response) %>% 
+  select(Response, Response_Explanation:Oysters.freq) %>% 
+  summarize(Tuna = mean(Tuna.freq),
+            Shrimp = mean(Shrimp.freq),
+            Salmon = mean(Salmon.freq),
+            Flounder = mean(Flounder.freq),
+            BlueCrab = mean(BlueCrab.freq),
+            Clams = mean(Clams.freq),
+            Mullet = mean(Mullet.freq),
+            Oysters = mean(Oysters.freq)) %>% 
+  pivot_longer(Tuna:Oysters, names_to = "Species", values_to = "ResponseMean")
+
+#plot most frequently eaten sp
+ggplot(freq.sp.summary.which) +
+  geom_point(aes(x = Species, y = ResponseMean))
 ```
+
+
 
 ```{r where}
 where.sp <- select(survey.dat, Where_Tuna:Where_Oysters)
