@@ -360,7 +360,8 @@ importance <- survey.dat %>%
          Wild = Importance_Wild,
          Farmed = Importance_Farmed,
          Age = Age_corrected,
-         Gender = Gender_original)
+         Gender = Gender_original) %>% 
+  filter(Education != 8, Gender == 1 | Gender == 2, Age != 8, Political_Party == 1 | Political_Party == 2, Race1 != 8 | Race1 != 9, Income != 8)
 
 columnnames <- c("Age", "Gender", "Education", "Political_Party", "Race1", "Income")
 importance[columnnames] <- lapply(importance[columnnames], factor)
@@ -374,15 +375,48 @@ import.pivot.box <-
   geom_boxplot()
 import.pivot.box  #doesn't show much honestly
 
+# exploring demographics to see if there are any w/ few numbers
+summary(importance$Age)
+summary(importance$Gender)
+summary(importance$Education) #only 7 people at ed level 7 doctorate
+summary(importance$Political_Party)
+summary(importance$Race1) #low numbers of 4-7 - might want to narrow to just 1, 2, 3 (white, latino, black)
+summary(importance$Income)
+
+# distribution of selected values
+sust <- summary(importance$Sustainable)
+sust[4]
+
+import.summary <- importance %>% 
+  summarize(Health = mean(Health),
+            Local = mean(Local),
+            Safe = mean(Safe),
+            Local_Economies = mean(Local_Economies),
+            Tasty = mean(Tasty),
+            Affordable = mean(Affordable),
+            Local_Culture = mean(Local_Culture),
+            Sustainable = mean(Sustainable),
+            Easy_Access = mean(Easy_Access),
+            Local_Env = mean(Local_Environments),
+            Fresh = mean(Fresh),
+            Wild = mean(Wild),
+            Farmed = mean(Farmed)) %>% 
+  pivot_longer(Health:Farmed, names_to = "Value", values_to = "Mean")
+
+ggplot(import.summary, aes(x = Value, y = Mean)) +
+  geom_point()
+```
+
+```{r wild}
 #models
 importance.lm.age <- lm(data = importance, Wild ~ Age)
-summary(importance.lm.age)
+summary(importance.lm.age) #older people care more about wild?
 
 importance.lm.gender <- lm(data = importance, Wild ~ Gender)
-summary(importance.lm.gender) # men more likely to prefer wild
+summary(importance.lm.gender) # no difference
 
 importance.lm.education <- lm(data = importance, Wild ~ Education)
-summary(importance.lm.education)
+summary(importance.lm.education) # ed3 significant
 
 importance.lm.political <- lm(data = importance, Wild ~ Political_Party)
 summary(importance.lm.political) # no significance
@@ -395,6 +429,69 @@ summary(importance.lm.income) #
 
 importance.lm.age.gender <- lm(data = importance, Wild ~ Age * Gender)
 summary(importance.lm.age.gender) #
+
+importance.plot <- ggplot(importance, aes(x = Education, y = Wild)) +
+  geom_jitter()
+importance.plot
 ```
 
+
+
+```{r fresh}
+#models
+fresh.lm.age <- lm(data = importance, Fresh ~ Age)
+summary(fresh.lm.age) #older people care more about fresh
+
+fresh.lm.gender <- lm(data = importance, Fresh ~ Gender)
+summary(fresh.lm.gender) # no difference
+
+fresh.lm.education <- lm(data = importance, Fresh ~ Education)
+summary(fresh.lm.education) # ed3 significant
+
+fresh.lm.political <- lm(data = importance, Fresh ~ Political_Party)
+summary(fresh.lm.political) # no significance
+
+fresh.lm.race <- lm(data = importance, Fresh ~ Race1)
+summary(fresh.lm.race) # no significance
+
+fresh.lm.income <- lm(data = importance, Fresh ~ Income)
+summary(fresh.lm.income) # no significance
+
+fresh.lm.age.gender <- lm(data = importance, Fresh ~ Age * Gender)
+summary(fresh.lm.age.gender) #
+
+#example plot?
+fresh.plot <- ggplot(importance, aes(x = Education, y = Fresh)) +
+  geom_jitter()
+fresh.plot
+```
+
+```{r Sustainable}
+summary(importance$Sustainable)
+
+sust.lm.age <- lm(data = importance, Sustainable ~ Age)
+summary(sust.lm.age) #age 6 cares slightly more
+
+sust.lm.gender <- lm(data = importance, Sustainable ~ Gender)
+summary(sust.lm.gender) # no difference
+
+sust.lm.education <- lm(data = importance, Sustainable ~ Education)
+summary(sust.lm.education) # ed3 significant
+
+sust.lm.political <- lm(data = importance, Sustainable ~ Political_Party)
+summary(sust.lm.political) # no significance
+
+sust.lm.race <- lm(data = importance, Sustainable ~ Race1)
+summary(sust.lm.race) # no significance
+
+sust.lm.income <- lm(data = importance, Sustainable ~ Income)
+summary(sust.lm.income) # no significance
+
+sust.lm.age.gender <- lm(data = importance, Sustainable ~ Age * Gender)
+summary(sust.lm.age.gender) #
+
+sust.plot <- ggplot(importance, aes(x = Education, y = Sustainable)) +
+  geom_jitter()
+sust.plot
+```
 
