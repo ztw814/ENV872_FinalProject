@@ -23,7 +23,7 @@ survey.dat <- read.csv("./AquacultureSurveyData.csv")
 survey.codes <- read.csv("./AquacultureSurveyCodes.csv")
 
 # Set ggplot theme
-mytheme <- theme_classic() +
+mytheme <- theme_light() +
   theme(axis.text = element_text(color = "black"), 
         legend.position = "top")
 theme_set(mytheme)
@@ -105,7 +105,7 @@ ggplot(freq.sp.summary.long, aes(y=Response_Explanation, x=value)) +
 ### Frequency visualization 1
 
 ```{r}
-#analyze which species are eaten most frequently
+#which species are eaten most frequently
 freq.sp.summary$Response <- as.numeric(freq.sp.summary$Response)
 freq.sp.summary.which <- freq.sp.summary %>% 
   mutate(Tuna.freq = Tuna * Response,
@@ -404,7 +404,11 @@ import.summary <- importance %>%
   pivot_longer(Health:Farmed, names_to = "Value", values_to = "Mean")
 
 ggplot(import.summary, aes(x = Value, y = Mean)) +
-  geom_point()
+  geom_point(size = 3) +
+  scale_y_continuous(limits = c(1,5)) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.65), 
+        plot.title = element_text(hjust=0.5)) +
+  labs(title = "Mean rating of values associated with seafood")
 ```
 
 ```{r wild}
@@ -434,8 +438,6 @@ importance.plot <- ggplot(importance, aes(x = Education, y = Wild)) +
   geom_jitter()
 importance.plot
 ```
-
-
 
 ```{r fresh}
 #models
@@ -493,5 +495,34 @@ summary(sust.lm.age.gender) #
 sust.plot <- ggplot(importance, aes(x = Education, y = Sustainable)) +
   geom_jitter()
 sust.plot
+```
+
+```{r local}
+summary(importance$Local)
+
+local.lm.age <- lm(data = importance, Local ~ Age)
+summary(local.lm.age) #age 6 cares slightly more
+
+local.lm.gender <- lm(data = importance, Local ~ Gender)
+summary(local.lm.gender) # no difference
+
+local.lm.education <- lm(data = importance, Local ~ Education)
+summary(local.lm.education) # ed3 significant
+
+local.lm.political <- lm(data = importance, Local ~ Political_Party)
+summary(local.lm.political) # no significance
+
+local.lm.race <- lm(data = importance, Local ~ Race1)
+summary(local.lm.race) # no significance
+
+local.lm.income <- lm(data = importance, Local ~ Income)
+summary(local.lm.income) # no significance
+
+local.lm.age.gender <- lm(data = importance, Local ~ Age * Gender)
+summary(local.lm.age.gender) #
+
+local.plot <- ggplot(importance, aes(x = Education, y = Local)) +
+  geom_jitter()
+local.plot
 ```
 
