@@ -3,6 +3,8 @@ title: "Working_File"
 author: "Zoe Wong"
 date: "4/9/2021"
 output: pdf_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -27,7 +29,7 @@ mytheme <- theme_classic() +
 theme_set(mytheme)
 ```
 
-## Basic overview questions
+# Basic overview questions
 
 1. Make a dataframe just for species-related data - general analysis
       -> work w/ separate dataframes for each type of data (frequency, form, etc)?
@@ -39,6 +41,8 @@ theme_set(mytheme)
       *Where do people get their seafood?  
       *How do people prefer to buy their seafood?
       *Do people prefer wild-caught or farmed seafood?
+
+## Frequency Analysis
 
 ```{r frequency} 
 freq.sp <- select(survey.dat, Frequency_Tuna:Frequency_Oysters)
@@ -96,6 +100,11 @@ ggplot(freq.sp.summary.long, aes(y=Response_Explanation, x=value)) +
   theme(axis.text.x = element_text(angle = 90), 
         plot.title = element_text(hjust=0.5))
 
+```
+
+### Frequency visualization 1
+
+```{r}
 #analyze which species are eaten most frequently
 freq.sp.summary$Response <- as.numeric(freq.sp.summary$Response)
 freq.sp.summary.which <- freq.sp.summary %>% 
@@ -123,7 +132,35 @@ ggplot(freq.sp.summary.which) +
   geom_point(aes(x = Species, y = ResponseMean))
 ```
 
+### Frequency visualization 2 (better)
 
+```{r}
+freq.sp.pivot <- freq.sp %>% 
+  rename(Tuna = Frequency_Tuna,
+         Shrimp = Frequency_Shrimp,
+         Salmon = Frequency_Salmon,
+         Flounder = Frequency_Flounder,
+         BlueCrab = Frequency_BlueCrab,
+         Clams = Frequency_Clams,
+         Mullet = Frequency_Mullet,
+         Oysters = Frequency_Oysters) %>% 
+  pivot_longer(Tuna:Oysters, names_to = "Species", values_to = "Response") %>% 
+  mutate(Response = Response + 1)
+
+# Violin plot
+freq.pivot.violin <-
+  ggplot(freq.sp.pivot, aes(x = Species, y = Response)) +
+  geom_violin()
+freq.pivot.violin
+
+# Box plot
+freq.pivot.box <-
+  ggplot(freq.sp.pivot, aes(x = Species, y = Response)) +
+  geom_boxplot()
+freq.pivot.box
+```
+
+## Where/Source Analysis
 
 ```{r where}
 where.sp <- select(survey.dat, Where_Tuna:Where_Oysters)
@@ -303,4 +340,61 @@ ggplot(qual.sp.summary.long, aes(y=Response_Explanation, x=value)) +
   theme(axis.text.x = element_text(angle = 90), 
         plot.title = element_text(hjust=0.5))
 ```
+
+## Importance analysis
+
+```{r importance}
+importance <- survey.dat %>% 
+  select(Importance_Health:Importance_Farmed, Age_corrected, Gender_original, Education, Political_Party, Race1, Income) %>% 
+   rename(Health = Importance_Health,
+         Local = Importance_Local,
+         Safe = Importance_Safe,
+         Local_Economies = Importance_Local_Economies,
+         Tasty = Importance_Tasty,
+         Affordable = Importance_Affordable,
+         Local_Culture = Importance_Local_Culture,
+         Sustainable = Importance_Sustainable,
+         Easy_Access = Importance_Easy_Access,
+         Local_Environments = Importance_Local_Environments,
+         Fresh = Importance_Fresh,
+         Wild = Importance_Wild,
+         Farmed = Importance_Farmed,
+         Age = Age_corrected,
+         Gender = Gender_original)
+
+columnnames <- c("Age", "Gender", "Education", "Political_Party", "Race1", "Income")
+importance[columnnames] <- lapply(importance[columnnames], factor)
+
+import.pivot <- importance %>% 
+  pivot_longer(Health:Farmed, names_to = "Value", values_to = "Response")
+
+# Box plot
+import.pivot.box <-
+  ggplot(import.pivot, aes(x = Value, y = Response)) +
+  geom_boxplot()
+import.pivot.box  #doesn't show much honestly
+
+#models
+importance.lm.age <- lm(data = importance, Wild ~ Age)
+summary(importance.lm.age)
+
+importance.lm.gender <- lm(data = importance, Wild ~ Gender)
+summary(importance.lm.gender) # men more likely to prefer wild
+
+importance.lm.education <- lm(data = importance, Wild ~ Education)
+summary(importance.lm.education)
+
+importance.lm.political <- lm(data = importance, Wild ~ Political_Party)
+summary(importance.lm.political) # no significance
+
+importance.lm.race <- lm(data = importance, Wild ~ Race1)
+summary(importance.lm.race) # no significance
+
+importance.lm.income <- lm(data = importance, Wild ~ Income)
+summary(importance.lm.income) # 
+
+importance.lm.age.gender <- lm(data = importance, Wild ~ Age * Gender)
+summary(importance.lm.age.gender) #
+```
+
 
