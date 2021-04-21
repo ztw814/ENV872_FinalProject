@@ -97,7 +97,7 @@ ggplot(freq.sp.summary.long, aes(y=Response_Explanation, x=value)) +
        x="Number of responses",
        y="Response",
        color = "Type") + 
-  theme(axis.text.x = element_text(angle = 90), 
+  theme(axis.text.x = element_text(angle = 45), 
         plot.title = element_text(hjust=0.5))
 
 ```
@@ -129,7 +129,12 @@ freq.sp.summary.which <- freq.sp.summary %>%
 
 #plot most frequently eaten sp
 ggplot(freq.sp.summary.which) +
-  geom_point(aes(x = Species, y = ResponseMean))
+  geom_point(aes(y = Species, x = ResponseMean)) + 
+  labs(title = "Title", 
+       y = "Number of Responses", 
+       x = "Species") + 
+  theme(axis.text.x = element_text(angle = 45), 
+        plot.title = element_text(hjust=0.5))
 ```
 
 ### Frequency visualization 2 (better)
@@ -155,7 +160,7 @@ freq.pivot.violin
 
 # Box plot
 freq.pivot.box <-
-  ggplot(freq.sp.pivot, aes(x = Species, y = Response)) +
+  ggplot(freq.sp.pivot, aes(y = Species, x = Response)) +
   geom_boxplot()
 freq.pivot.box
 ```
@@ -257,7 +262,7 @@ pref.response.meaning <- c("5 Strongly prefer wild caught",
                            "3 No preference",
                            "2 Slightly prefer farmed",
                            "1 Strongly prefer farmed",
-                           "I don't know")
+                           "0 I don't know")
 
 pref.sp.summary$Response_Explanation <- pref.response.meaning
 
@@ -272,7 +277,7 @@ ggplot(pref.sp.summary.long, aes(y=Response_Explanation, x=value)) +
   labs(title ="Wild caught vs farmed preferences for different seafood types",
        x="Count of Response Type",
        y="Response") + 
-  theme(axis.text.x = element_text(angle = 90), 
+  theme(axis.text.x = element_text(angle = 45), 
         plot.title = element_text(hjust=0.5))
 ```
 
@@ -349,13 +354,13 @@ importance <- survey.dat %>%
    rename(Health = Importance_Health,
          Local = Importance_Local,
          Safe = Importance_Safe,
-         Local_Economies = Importance_Local_Economies,
+         Economies = Importance_Local_Economies,
          Tasty = Importance_Tasty,
          Affordable = Importance_Affordable,
-         Local_Culture = Importance_Local_Culture,
+         Culture = Importance_Local_Culture,
          Sustainable = Importance_Sustainable,
-         Easy_Access = Importance_Easy_Access,
-         Local_Environments = Importance_Local_Environments,
+         Accessibility = Importance_Easy_Access,
+         Environment = Importance_Local_Environments,
          Fresh = Importance_Fresh,
          Wild = Importance_Wild,
          Farmed = Importance_Farmed,
@@ -391,13 +396,13 @@ import.summary <- importance %>%
   summarize(Health = mean(Health),
             Local = mean(Local),
             Safe = mean(Safe),
-            Local_Economies = mean(Local_Economies),
+            Economies = mean(Economies),
             Tasty = mean(Tasty),
             Affordable = mean(Affordable),
-            Local_Culture = mean(Local_Culture),
+            Culture = mean(Culture),
             Sustainable = mean(Sustainable),
-            Easy_Access = mean(Easy_Access),
-            Local_Env = mean(Local_Environments),
+            Accessible = mean(Accessibility),
+            Environment = mean(Environment),
             Fresh = mean(Fresh),
             Wild = mean(Wild),
             Farmed = mean(Farmed)) %>% 
@@ -408,7 +413,9 @@ ggplot(import.summary, aes(x = Value, y = Mean)) +
   scale_y_continuous(limits = c(1,5)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 0.65), 
         plot.title = element_text(hjust=0.5)) +
-  labs(title = "Mean rating of values associated with seafood")
+  labs(title = "Relative Importance of Values Associated with Seafood", 
+       y = "Relative Importance (mean)", 
+       x = "Values")
 ```
 
 ```{r wild}
