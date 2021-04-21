@@ -75,13 +75,13 @@ freq.sp.summary <- freq.sp.summary %>%
          Mullet = Freq.x.x.x.x,
          Oysters = Freq.y.y.y.y)
 
-freq.response.meaning <- c("Never", 
-                           "Once in the past year", 
-                           "A few times in the past year",
-                           "Once a month",
-                           "A few times every month",
-                           "Once a week",
-                           "A few times a week")
+freq.response.meaning <- c("1 Never", 
+                           "2 Once in the past year", 
+                           "3 A few times in the past year",
+                           "4 Once a month",
+                           "5 A few times every month",
+                           "6 Once a week",
+                           "7 A few times a week")
 
 freq.sp.summary$Response_Explanation <- freq.response.meaning
 
@@ -252,11 +252,11 @@ pref.sp.summary <- pref.sp.summary %>%
          Mullet = Freq.x.x.x.x,
          Oysters = Freq.y.y.y.y)
 
-pref.response.meaning <- c("Strongly prefer wild caught", 
-                           "Slightly prefer wild caught", 
-                           "No preference",
-                           "Slightly prefer farmed",
-                           "Strongly prefer farmed",
+pref.response.meaning <- c("5 Strongly prefer wild caught", 
+                           "4 Slightly prefer wild caught", 
+                           "3 No preference",
+                           "2 Slightly prefer farmed",
+                           "1 Strongly prefer farmed",
                            "I don't know")
 
 pref.sp.summary$Response_Explanation <- pref.response.meaning
