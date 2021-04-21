@@ -152,11 +152,34 @@ freq.sp.pivot <- freq.sp %>%
   pivot_longer(Tuna:Oysters, names_to = "Species", values_to = "Response") %>% 
   mutate(Response = Response + 1)
 
+freq.sp.mean <- freq.sp %>% 
+  mutate(Frequency_Tuna = Frequency_Tuna + 1,
+         Frequency_Shrimp = Frequency_Shrimp + 1,
+         Frequency_Salmon = Frequency_Salmon + 1,
+         Frequency_Flounder = Frequency_Flounder + 1,
+         Frequency_BlueCrab = Frequency_BlueCrab + 1,
+         Frequency_Clams = Frequency_Clams + 1,
+         Frequency_Mullet = Frequency_Mullet + 1,
+         Frequency_Oysters = Frequency_Oysters + 1) %>% 
+  summarize(Tuna = mean(Frequency_Tuna),
+            Shrimp = mean(Frequency_Shrimp),
+            Salmon = mean(Frequency_Salmon),
+            Flounder = mean(Frequency_Flounder),
+            BlueCrab = mean(Frequency_BlueCrab),
+            Clams = mean(Frequency_Clams),
+            Mullet = mean(Frequency_Mullet),
+            Oysters = mean(Frequency_Oysters)) %>% 
+  pivot_longer(Tuna:Oysters, names_to = "Species", values_to = "Mean")
+
 # Violin plot
-freq.pivot.violin <-
-  ggplot(freq.sp.pivot, aes(x = Species, y = Response)) +
-  geom_violin()
+freq.pivot.violin <- ggplot() +
+  geom_violin(data = freq.sp.pivot, aes(x = Species, y = Response)) +
+  geom_point(data = freq.sp.mean, aes(x = Species, y = Mean), size = 3) +
+  labs(title = "How often do you eat certain seafood?") + 
+  scale_y_continuous(limits = c(1,7), breaks = c(1:7)) +
+  theme(plot.title = element_text(hjust=0.5))
 freq.pivot.violin
+
 
 # Box plot
 freq.pivot.box <-
@@ -323,11 +346,12 @@ qual.sp.summary <- qual.sp.summary %>%
          LocalEnvironments = Freq.y.y.y.y.y,
          Fresh = Freq)
 
-qual.response.meaning <- c("More associated with wild caught", 
-                           "Equally associated w/ wild caught & farmed", 
-                           "More associated with farmed",
-                           "Associated w/ neither wild caught nor farmed",
-                           "I don't know")
+qual.sp.summary <- qual.sp.summary[-c(5),]
+
+qual.response.meaning <- c("4 More associated with wild caught", 
+                           "3 Equally associated w/ wild caught & farmed", 
+                           "2 More associated with farmed",
+                           "1 Associated w/ neither wild caught nor farmed")
 
 qual.sp.summary$Response_Explanation <- qual.response.meaning
 
@@ -338,9 +362,9 @@ qual.sp.summary.long$value <- as.numeric(qual.sp.summary.long$value)
 
 #create plot for each column in data frame
 ggplot(qual.sp.summary.long, aes(y=Response_Explanation, x=value)) +
-  geom_point(aes(colour = series)) + 
-  labs(title ="Quality associations with different seafood types",
-       x="Count of Response Type",
+  geom_point(aes(colour = series), size = 3) + 
+  labs(title ="Quality associations with wild vs farmed seafood",
+       x="Count",
        y="Response") + 
   theme(axis.text.x = element_text(angle = 90), 
         plot.title = element_text(hjust=0.5))
