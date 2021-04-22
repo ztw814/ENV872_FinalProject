@@ -180,7 +180,6 @@ freq.pivot.violin <- ggplot() +
   theme(plot.title = element_text(hjust=0.5))
 freq.pivot.violin
 
-
 # Box plot
 freq.pivot.box <-
   ggplot(freq.sp.pivot, aes(y = Species, x = Response)) +
@@ -280,12 +279,13 @@ pref.sp.summary <- pref.sp.summary %>%
          Mullet = Freq.x.x.x.x,
          Oysters = Freq.y.y.y.y)
 
+pref.sp.summary <- pref.sp.summary[-c(6),]
+
 pref.response.meaning <- c("5 Strongly prefer wild caught", 
                            "4 Slightly prefer wild caught", 
                            "3 No preference",
                            "2 Slightly prefer farmed",
-                           "1 Strongly prefer farmed",
-                           "0 I don't know")
+                           "1 Strongly prefer farmed")
 
 pref.sp.summary$Response_Explanation <- pref.response.meaning
 
@@ -296,7 +296,7 @@ pref.sp.summary.long$value <- as.numeric(pref.sp.summary.long$value)
 
 #create plot for each column in data frame
 ggplot(pref.sp.summary.long, aes(y=Response_Explanation, x=value)) +
-  geom_point(aes(colour = series)) + 
+  geom_point(aes(colour = series), size = 3) + 
   labs(title ="Wild caught vs farmed preferences for different seafood types",
        x="Count of Response Type",
        y="Response") + 
