@@ -19,8 +19,8 @@ library(tidyverse)
 library(ggplot2)
 library(reshape2)
 
-survey.dat <- read.csv("./AquacultureSurveyData.csv")
-survey.codes <- read.csv("./AquacultureSurveyCodes.csv")
+survey.dat <- read.csv("./Data/Raw/AquacultureSurveyData.csv")
+survey.codes <- read.csv("./Data/Raw/AquacultureSurveyCodes.csv")
 
 # Set ggplot theme
 mytheme <- theme_light() +
@@ -509,7 +509,7 @@ ggplot(qual.sp.summary.long, aes(y=Response_Explanation, x=value)) +
         plot.title = element_text(hjust=0.5))
 ```
 
-### Preference bar plots 4/24/21
+### Qualities bar plots 4/24/21
 
 ```{r qualities bar}
 qual.response.meaning <- c("4 More associated with wild caught", 
