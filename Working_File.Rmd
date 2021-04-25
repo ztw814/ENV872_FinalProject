@@ -25,7 +25,8 @@ survey.codes <- read.csv("./AquacultureSurveyCodes.csv")
 # Set ggplot theme
 mytheme <- theme_light() +
   theme(axis.text = element_text(color = "black"), 
-        legend.position = "top")
+        legend.position = "top",
+        plot.title = element_text(hjust=0.4))
 theme_set(mytheme)
 ```
 
@@ -101,6 +102,73 @@ ggplot(freq.sp.summary.long, aes(y=Response_Explanation, x=value)) +
         plot.title = element_text(hjust=0.5))
 
 ```
+
+### Frequency bar plots 4/24/21
+
+```{r frequency bar}
+freq.response.meaning <- c("1 Never", 
+                           "2 Once in the past year", 
+                           "3 A few times in the past year",
+                           "4 Once a month",
+                           "5 A few times every month",
+                           "6 Once a week",
+                           "7 A few times a week")
+
+freq.sp.Tuna$Var1 <- freq.response.meaning
+freq.sp.Shrimp$Var1 <- freq.response.meaning
+freq.sp.Salmon$Var1 <- freq.response.meaning
+freq.sp.Flounder$Var1 <- freq.response.meaning
+freq.sp.BlueCrab$Var1 <- freq.response.meaning
+freq.sp.Clams$Var1 <- freq.response.meaning
+freq.sp.Mullet$Var1 <- freq.response.meaning
+freq.sp.Oysters$Var1 <- freq.response.meaning
+
+
+freq.Tuna.bar <- ggplot(freq.sp.Tuna, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Tuna") + 
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+
+freq.Shrimp.bar <- ggplot(freq.sp.Shrimp, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Shrimp") + 
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+
+freq.Salmon.bar <- ggplot(freq.sp.Salmon, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Salmon") + 
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+
+freq.Flounder.bar <- ggplot(freq.sp.Flounder, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Flounder") + 
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+
+freq.BlueCrab.bar <- ggplot(freq.sp.BlueCrab, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Blue Crab") + 
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+
+freq.Clams.bar <- ggplot(freq.sp.Clams, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Clams") + 
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+
+freq.Mullet.bar <- ggplot(freq.sp.Mullet, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Mullet") + 
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+
+freq.Oysters.bar <- ggplot(freq.sp.Oysters, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Oysters") + 
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+
+cowplot::plot_grid(freq.Tuna.bar, freq.Shrimp.bar, freq.Salmon.bar, freq.Flounder.bar, freq.BlueCrab.bar, freq.Clams.bar, freq.Mullet.bar, freq.Oysters.bar, ncol = 2)
+
+```
+
+
 
 ### Frequency visualization 1
 
@@ -304,6 +372,77 @@ ggplot(pref.sp.summary.long, aes(y=Response_Explanation, x=value)) +
         plot.title = element_text(hjust=0.5))
 ```
 
+### Preference bar plots 4/24/21
+
+```{r preference bar}
+pref.response.meaning <- c("5 Strongly prefer wild caught", 
+                           "4 Slightly prefer wild caught", 
+                           "3 No preference",
+                           "2 Slightly prefer farmed",
+                           "1 Strongly prefer farmed")
+
+pref.sp.Tuna <- pref.sp.Tuna[-c(6),]
+pref.sp.Tuna$Var1 <- pref.response.meaning
+pref.sp.Shrimp <- pref.sp.Shrimp[-c(6),]
+pref.sp.Shrimp$Var1 <- pref.response.meaning
+pref.sp.Salmon <- pref.sp.Salmon[-c(6),]
+pref.sp.Salmon$Var1 <- pref.response.meaning
+pref.sp.Flounder <- pref.sp.Flounder[-c(6),]
+pref.sp.Flounder$Var1 <- pref.response.meaning
+pref.sp.BlueCrab <- pref.sp.BlueCrab[-c(6),]
+pref.sp.BlueCrab$Var1 <- pref.response.meaning
+pref.sp.Clams <- pref.sp.Clams[-c(6),]
+pref.sp.Clams$Var1 <- pref.response.meaning
+pref.sp.Mullet <- pref.sp.Mullet[-c(6),]
+pref.sp.Mullet$Var1 <- pref.response.meaning
+pref.sp.Oysters <- pref.sp.Oysters[-c(6),]
+pref.sp.Oysters$Var1 <- pref.response.meaning
+
+
+pref.Tuna.bar <- ggplot(pref.sp.Tuna, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Tuna") + 
+  scale_x_continuous(limits = c(0, 700), breaks = c(0, 200, 400, 600))
+
+pref.Shrimp.bar <- ggplot(pref.sp.Shrimp, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Shrimp") + 
+  scale_x_continuous(limits = c(0, 700), breaks = c(0, 200, 400, 600))
+
+pref.Salmon.bar <- ggplot(pref.sp.Salmon, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Salmon") + 
+  scale_x_continuous(limits = c(0, 700), breaks = c(0, 200, 400, 600))
+
+pref.Flounder.bar <- ggplot(pref.sp.Flounder, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Flounder") + 
+  scale_x_continuous(limits = c(0, 700), breaks = c(0, 200, 400, 600))
+
+pref.BlueCrab.bar <- ggplot(pref.sp.BlueCrab, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Blue Crab") + 
+  scale_x_continuous(limits = c(0, 700), breaks = c(0, 200, 400, 600))
+
+pref.Clams.bar <- ggplot(pref.sp.Clams, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Clams") + 
+  scale_x_continuous(limits = c(0, 700), breaks = c(0, 200, 400, 600))
+
+pref.Mullet.bar <- ggplot(pref.sp.Mullet, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Mullet") + 
+  scale_x_continuous(limits = c(0, 700), breaks = c(0, 200, 400, 600))
+
+pref.Oysters.bar <- ggplot(pref.sp.Oysters, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Oysters") + 
+  scale_x_continuous(limits = c(0, 700), breaks = c(0, 200, 400, 600))
+
+cowplot::plot_grid(pref.Tuna.bar, pref.Shrimp.bar, pref.Salmon.bar, pref.Flounder.bar, pref.BlueCrab.bar, pref.Clams.bar, pref.Mullet.bar, pref.Oysters.bar, ncol = 2)
+
+```
+
 ## Qualities analysis 
 
 ```{r qualities}
@@ -368,6 +507,97 @@ ggplot(qual.sp.summary.long, aes(y=Response_Explanation, x=value)) +
        y="Response") + 
   theme(axis.text.x = element_text(angle = 90), 
         plot.title = element_text(hjust=0.5))
+```
+
+### Preference bar plots 4/24/21
+
+```{r qualities bar}
+qual.response.meaning <- c("4 More associated with wild caught", 
+                           "3 Equally associated w/ wild caught & farmed", 
+                           "2 More associated with farmed",
+                           "1 Associated w/ neither wild caught nor farmed")
+
+qual.sp.Healthy <- qual.sp.Healthy[-c(5),]
+qual.sp.Healthy$Var1 <- qual.response.meaning
+qual.sp.Local <- qual.sp.Local[-c(5),]
+qual.sp.Local$Var1 <- qual.response.meaning
+qual.sp.Safe <- qual.sp.Safe[-c(5),]
+qual.sp.Safe$Var1 <- qual.response.meaning
+qual.sp.Local_Economies <- qual.sp.Local_Economies[-c(5),]
+qual.sp.Local_Economies$Var1 <- qual.response.meaning
+qual.sp.Tasty <- qual.sp.Tasty[-c(5),]
+qual.sp.Tasty$Var1 <- qual.response.meaning
+qual.sp.Affordable <- qual.sp.Affordable[-c(5),]
+qual.sp.Affordable$Var1 <- qual.response.meaning
+qual.sp.Local_Culture <- qual.sp.Local_Culture[-c(5),]
+qual.sp.Local_Culture$Var1 <- qual.response.meaning
+qual.sp.Sustainable <- qual.sp.Sustainable[-c(5),]
+qual.sp.Sustainable$Var1 <- qual.response.meaning
+qual.sp.Easy_Access <- qual.sp.Easy_Access[-c(5),]
+qual.sp.Easy_Access$Var1 <- qual.response.meaning
+qual.sp.Local_Environments <- qual.sp.Local_Environments[-c(5),]
+qual.sp.Local_Environments$Var1 <- qual.response.meaning
+qual.sp.Fresh <- qual.sp.Fresh[-c(5),]
+qual.sp.Fresh$Var1 <- qual.response.meaning
+
+
+qual.Healthy.bar <- ggplot(qual.sp.Healthy, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Healthy") + 
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+
+qual.Local.bar <- ggplot(qual.sp.Local, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Local") + 
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+
+qual.Safe.bar <- ggplot(qual.sp.Safe, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Safe") + 
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+
+qual.Local_Economies.bar <- ggplot(qual.sp.Local_Economies, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Local Economies") + 
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+
+qual.Tasty.bar <- ggplot(qual.sp.Tasty, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Tasty") + 
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+
+qual.Affordable.bar <- ggplot(qual.sp.Affordable, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Affordable") + 
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+
+qual.Local_Culture.bar <- ggplot(qual.sp.Local_Culture, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Local Culture") + 
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+
+qual.Sustainable.bar <- ggplot(qual.sp.Sustainable, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Sustainable") + 
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+
+qual.Easy_Access.bar <- ggplot(qual.sp.Easy_Access, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Easy Access") + 
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+
+qual.Local_Environments.bar <- ggplot(qual.sp.Local_Environments, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Local Environments") + 
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+
+qual.Fresh.bar <- ggplot(qual.sp.Fresh, aes(y = Var1, x = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(y = "Response", x = "Count", title = "Fresh") + 
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+
+cowplot::plot_grid(qual.Tasty.bar, qual.Fresh.bar, qual.Healthy.bar, qual.Safe.bar, qual.Sustainable.bar, qual.Affordable.bar, qual.Easy_Access.bar, qual.Local.bar, qual.Local_Culture.bar, qual.Local_Economies.bar, qual.Local_Environments.bar, ncol = 2)
+
 ```
 
 ## Importance analysis
