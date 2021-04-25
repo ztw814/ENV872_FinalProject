@@ -53,7 +53,7 @@ Preference: Between wild-caught and farmed versions of the same seafood species,
     
 Qualities: How do you associate the following qualities with different types of seafood (farmed and wild-caught)?
     1 = More associated with wild-caught
-    2 = Associated equally wiht wild-caught and farmed
+    2 = Associated equally with wild-caught and farmed
     3 = More associated with farmed
     4 = Associated with neither wild-caught or farmed
     5 = I don't know

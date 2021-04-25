@@ -52,8 +52,8 @@ survey.dat <- read.csv("./Data/Raw/AquacultureSurveyData.csv")
 
 ## Research Questions
 
-1. When consumers buy seafood, which species do they prefer?  Do they prefer wild or farmed fish?
-2. What qualities do consumers associate with seafood?  What qualities do they value in seafood?
+1. (a) When consumers buy seafood, which species do they prefer?  (b) Do they prefer wild or farmed fish?
+2. (a) What qualities do consumers associate with wild vs. farmed seafood?  (b) What qualities do they value in seafood?
 3. Are seafood values predicted by demographic variables such as age or education level?
 
 
@@ -65,24 +65,55 @@ survey.dat <- read.csv("./Data/Raw/AquacultureSurveyData.csv")
 
 Our data were obtained from a social science survey conducted by a multi-university team of researchers, including the Murray lab at Duke University. The survey was conducted in the summer of 2020 via Qualtrics and targeted North Carolina residents from across the state.  
 
-The survey asked respondents a total of 37 questions.  The question topics can be broken down into the following categories: eating habits for 8 types of seafood, what qualities respondents associate with seafood, attitudes about mariculture, attitudes about North Carolina seafood versus commercial fishing, respondents' involvement with seafood production, and demographic indicators. This study focuses on questions about eating habits, what qualities are associated with seafood, and demographic indicators.
+The survey asked respondents a total of 37 questions.  The question topics can be broken down into the following categories: eating habits for 8 types of seafood, what qualities respondents associate with seafood, attitudes about mariculture, attitudes about North Carolina seafood versus commercial fishing, respondents' involvement with seafood production, and demographic indicators. This study focuses on questions about eating habits, what qualities are associated with seafood, and demographic indicators.  
 
 Respondents answered each question by selecting one option from a menu of choices; the number of choices available depended on the question. The dataset contained responses from 1436 participants.
 
 ## Data Wrangling
 
-For each analysis, we created a new dataset containing only the relevant columns.  For each category within the survey question, we then created a table with the frequency of each questions response.  For example, one question asked respondents to rate how often they ate each of 8 types of seafood; respondents could choose from 7 responses for each seafood type.  To wrangle this data, we created a dataframe for each type of seafood, for a total of 8 dataframes, each of which contained a column with the response choices and a column with the number of respondents that chose each response.  Because the response choices were only represented by a number in the raw data, we renamed the response column with the meaning of each number for greater clarity.  We repeated this process for the first two research questions (how often participants eat each type of seafood, whether participants prefer each type wild or farmed, whether participants associate each quality with wild or farmed seafood).
+For each analysis, we created a new dataset containing only the relevant columns.  For each category within the survey question, we then created a table with the frequency of each questions response.  For example, one question asked respondents to rate how often they ate each of 8 types of seafood; respondents could choose from 7 responses for each seafood type.  To wrangle this data, we created a dataframe for each type of seafood, for a total of 8 dataframes, each of which contained a column with the response choices and a column with the number of respondents that chose each response.  Because the response choices were only represented by a number in the raw data, we renamed the response column with the meaning of each number for greater clarity.  We repeated this process for the first two research questions (how often participants eat each type of seafood, whether participants prefer each type wild or farmed, whether participants associate each quality with wild or farmed seafood).  
 
-For the fourth research question, we created a dataframe with responses to a question about how important each of 11 qualities was when respondents were buying seafood.  We then renamed the columns and removed rows with alternate responses to demographic variables, such as "prefer not to answer."
+For the third research question, we created a dataframe with responses to a question about how important each of 11 qualities was when respondents were buying seafood.  We then renamed the columns and removed rows with alternate responses to demographic variables, such as "prefer not to answer."
 
-## Data Structure
+## Data Structure: Consumer preferences
 
+****Data from these responses are categorical, but the response choices could be situated along a linear scale, allowing us to analyze response means. 
 
+Research Question|Survey Question | Response choices
+-----------|------------- | -------- | ----------
+1a. When consumers buy seafood, which species do they prefer?   |  In the past year, how often did you eat the following type of seafood*? | 0 = Never, 1 = Once in the past year, 2 = A few times in the past year, 3 = Once a month, 4 = A few times every month, 5 = Once a week, 6 = More than once a week
+1b. Do consumers prefer wild or farmed fish? |  Between wild-caught and farmed versions of the same seafood species*, which do you prefer to eat? | 1 = Strongly prefer wild-caught,  2 = Slightly prefer wild-caught,  3 = No preference,  4 = Slightly prefer farmed, 5 = Strongly prefer farmed,  6 = I don't know
+2a. What qualities do consumers associate with wild vs. farmed seafood? |  How do you associate the following qualities** with different types of seafood (farmed and wild-caught)? | 1 = More associated with wild-caught, 2 = Associated equally with wild-caught and farmed, 3 = More associated with farmed,  4 = Associated with neither wild-caught or farmed, 5 = I don't know
+2b. What qualities do consumers value in seafood? |  When you are buying seafood, how important are the following qualities** to you? | 1 = Not at all important, 2 = Slightly important, 3 = Moderately important,   4 = Very important, 5 = Extremely important
+
+* Seafood types: Tuna, Shrimp, Salmon, Flounder, Blue Crab, Clams, Mullet, Oysters (8)
+** Qualities: Healthy, Local, Safe, Tasty, Affordable, Sustainable, Fresh, Easy Access, Local Culture, Local Economies, Local Environment (11)
+
+## Data structure: Demographics
+
+Demographic Category | Response choices | Counts
+----- | -------- | ---------
+Age | 1=19 or younger, 2=20-29, 3=30-39, 4=40-49, 5=50-59, 6=60-69, 7=70 or older, 8=Prefer not to answer | 
+Gender | 
+3. Are seafood values predicted by demographic variables such as age or education level? |   | Age, Gender, Education Level, Political Party, Race, Income Level (6)
 
 
 \newpage
 
 # Exploratory Analysis 
+
+ [explanatory text]
+ 
+```{r freq general}
+freq.general <- as.data.frame(survey.dat$Frequency_General) 
+freq.general <- freq.general %>% 
+  mutate(Overall_Frequency = survey.dat$Frequency_General + 1)
+freq.general.mean <- freq.general %>% 
+  summarize(Overall_Mean = mean(Overall_Frequency))
+
+```
+
+freq.general mean = 4.76
 
 - frequency general?
 - map of counties where respondents live?
@@ -97,10 +128,64 @@ For the fourth research question, we created a dataframe with responses to a que
 
 ## Question 1: When consumers buy seafood, which species do they prefer? 
 
-```{r frequency}
+```{r kable freq}
 # Selecting the relevant columns from the raw data frame
 freq.sp <- select(survey.dat, Frequency_Tuna:Frequency_Oysters)
 
+# Finding means
+freq.sp.mean <- freq.sp %>% 
+  # Adding 1 to all cells to eliminate 0s
+  mutate(Frequency_Tuna = Frequency_Tuna + 1,
+         Frequency_Shrimp = Frequency_Shrimp + 1,
+         Frequency_Salmon = Frequency_Salmon + 1,
+         Frequency_Flounder = Frequency_Flounder + 1,
+         Frequency_BlueCrab = Frequency_BlueCrab + 1,
+         Frequency_Clams = Frequency_Clams + 1,
+         Frequency_Mullet = Frequency_Mullet + 1,
+         Frequency_Oysters = Frequency_Oysters + 1) %>% 
+  # Finding the mean response per species
+  summarize(Tuna = round(mean(Frequency_Tuna), 2),
+            Shrimp = round(mean(Frequency_Shrimp), 2),
+            Salmon = round(mean(Frequency_Salmon), 2),
+            Flounder = round(mean(Frequency_Flounder), 2),
+            BlueCrab = round(mean(Frequency_BlueCrab), 2),
+            Clams = round(mean(Frequency_Clams), 2),
+            Mullet = round(mean(Frequency_Mullet), 2),
+            Oysters = round(mean(Frequency_Oysters), 2)) %>% 
+  pivot_longer(Tuna:Oysters, names_to = "Species", values_to = "Mean")
+
+freq.means.table <- knitr::kable(freq.sp.mean, caption = "Mean response: How often do you eat the following type of seafood?")
+freq.means.table
+```
+
+```{r freq violin}
+# Wrangling data for violin plot using pivot_longer
+freq.sp.pivot <- freq.sp %>% 
+  rename(Tuna = Frequency_Tuna,
+         Shrimp = Frequency_Shrimp,
+         Salmon = Frequency_Salmon,
+         Flounder = Frequency_Flounder,
+         BlueCrab = Frequency_BlueCrab,
+         Clams = Frequency_Clams,
+         Mullet = Frequency_Mullet,
+         Oysters = Frequency_Oysters) %>% 
+  pivot_longer(Tuna:Oysters, names_to = "Species", values_to = "Response") %>% 
+  # Eliminating 0s
+  mutate(Response = Response + 1)
+
+freq.pivot.violin <- ggplot() +
+  geom_violin(data = freq.sp.pivot, aes(x = Species, y = Response)) +
+  geom_point(data = freq.sp.mean, aes(x = Species, y = Mean), size = 3) +
+  geom_text(data = freq.sp.mean, aes(x = Species, y = Mean, label = Mean), 
+            hjust = -0.5, vjust = -1) +
+  labs(title = "How often do you eat certain types of seafood?") + 
+  scale_y_continuous(limits = c(1,7), breaks = c(1:7)) +
+  theme(plot.title = element_text(hjust=0.5))
+freq.pivot.violin
+
+```
+
+```{r frequency}
 # Frequency of each response per seafood type
 freq.sp.Tuna <- as.data.frame(table(freq.sp$Frequency_Tuna))
 freq.sp.Shrimp <- as.data.frame(table(freq.sp$Frequency_Shrimp))
@@ -176,6 +261,13 @@ plot_grid(freq.Tuna.bar, freq.Shrimp.bar, freq.Salmon.bar, freq.Flounder.bar, fr
 ```
 
 [explanation of frequency findings. also add fig.cap above]
+
+
+
+
+[explanation etc]
+
+
 
 
 
