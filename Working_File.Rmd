@@ -11,6 +11,17 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# TO DO
+- make processed datasets
+- add figure captions
+- readme file
+- change github repo name? add link to rmd header
+- title
+
+
+
+
+
 ## Setup
 
 ```{r setup}
@@ -619,8 +630,8 @@ importance <- survey.dat %>%
          Wild = Importance_Wild,
          Farmed = Importance_Farmed,
          Age = Age_corrected,
-         Gender = Gender_original) %>% 
-  filter(Education != 8, Gender == 1 | Gender == 2, Age != 8, Political_Party == 1 | Political_Party == 2, Race1 != 8 | Race1 != 9, Income != 8)
+         Gender = Gender_original) # %>% 
+ # filter(Education != 8, Gender == 1 | Gender == 2, Age != 8, Political_Party == 1 | Political_Party == 2, Race1 != 8 | Race1 != 9, Income != 8)
 
 columnnames <- c("Age", "Gender", "Education", "Political_Party", "Race1", "Income")
 importance[columnnames] <- lapply(importance[columnnames], factor)

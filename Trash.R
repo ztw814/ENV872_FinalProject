@@ -41,3 +41,28 @@ col <- c("Where_Shrimp", "Where_Salmon", "Where_Flounder", "Where_BlueCrab", "Wh
 where.sp.fun(col, where.sp)
 
 freq.sp.summary.long$Response_Explanation <- factor(freq.sp.summary.long$Response_Explanation, levels = freq.sp.summary.long$Response_Explanation[order(c("Never", "Once in the past year", "A few times in the past year", "Once a month", "A few times every month", "Once a week", "A few times a week"))])
+
+# Finding means
+freq.sp.mean <- freq.sp %>% 
+  # Adding 1 to all cells to eliminate 0s
+  mutate(Frequency_Tuna = Frequency_Tuna + 1,
+         Frequency_Shrimp = Frequency_Shrimp + 1,
+         Frequency_Salmon = Frequency_Salmon + 1,
+         Frequency_Flounder = Frequency_Flounder + 1,
+         Frequency_BlueCrab = Frequency_BlueCrab + 1,
+         Frequency_Clams = Frequency_Clams + 1,
+         Frequency_Mullet = Frequency_Mullet + 1,
+         Frequency_Oysters = Frequency_Oysters + 1) %>% 
+  # Finding the mean response per species
+  summarize(Tuna = round(mean(Frequency_Tuna), 2),
+            Shrimp = round(mean(Frequency_Shrimp), 2),
+            Salmon = round(mean(Frequency_Salmon), 2),
+            Flounder = round(mean(Frequency_Flounder), 2),
+            BlueCrab = round(mean(Frequency_BlueCrab), 2),
+            Clams = round(mean(Frequency_Clams), 2),
+            Mullet = round(mean(Frequency_Mullet), 2),
+            Oysters = round(mean(Frequency_Oysters), 2)) %>% 
+  pivot_longer(Tuna:Oysters, names_to = "Species", values_to = "Mean")
+
+freq.means.table <- knitr::kable(freq.sp.mean, caption = "Mean response: How often do you eat the following type of seafood?")
+freq.means.table

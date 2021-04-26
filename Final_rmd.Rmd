@@ -80,22 +80,41 @@ For the third research question, we created a dataframe with responses to a ques
 ****Data from these responses are categorical, but the response choices could be situated along a linear scale, allowing us to analyze response means. 
 
 Research Question|Survey Question | Response choices
------------|------------- | -------- | ----------
-1a. When consumers buy seafood, which species do they prefer?   |  In the past year, how often did you eat the following type of seafood*? | 0 = Never, 1 = Once in the past year, 2 = A few times in the past year, 3 = Once a month, 4 = A few times every month, 5 = Once a week, 6 = More than once a week
-1b. Do consumers prefer wild or farmed fish? |  Between wild-caught and farmed versions of the same seafood species*, which do you prefer to eat? | 1 = Strongly prefer wild-caught,  2 = Slightly prefer wild-caught,  3 = No preference,  4 = Slightly prefer farmed, 5 = Strongly prefer farmed,  6 = I don't know
-2a. What qualities do consumers associate with wild vs. farmed seafood? |  How do you associate the following qualities** with different types of seafood (farmed and wild-caught)? | 1 = More associated with wild-caught, 2 = Associated equally with wild-caught and farmed, 3 = More associated with farmed,  4 = Associated with neither wild-caught or farmed, 5 = I don't know
-2b. What qualities do consumers value in seafood? |  When you are buying seafood, how important are the following qualities** to you? | 1 = Not at all important, 2 = Slightly important, 3 = Moderately important,   4 = Very important, 5 = Extremely important
+-----------|------------- | --------
+1a. When consumers buy seafood, which species do they prefer?   |  In the past year, how often did you eat the following type of seafood**? | 0 = Never, 1 = Once in the past year, 2 = A few times in the past year, 3 = Once a month, 4 = A few times every month, 5 = Once a week, 6 = More than once a week
+1b. Do consumers prefer wild or farmed fish? |  Between wild-caught and farmed versions of the same seafood species**, which do you prefer to eat? | 1 = Strongly prefer wild-caught,  2 = Slightly prefer wild-caught,  3 = No preference,  4 = Slightly prefer farmed, 5 = Strongly prefer farmed,  6 = I don't know
+2a. What qualities do consumers associate with wild vs. farmed seafood? |  How do you associate the following qualities*** with different types of seafood (farmed and wild-caught)? | 1 = More associated with wild-caught, 2 = Associated equally with wild-caught and farmed, 3 = More associated with farmed,  4 = Associated with neither wild-caught or farmed, 5 = I don't know
+2b. What qualities do consumers value in seafood? |  When you are buying seafood, how important are the following qualities*** to you? | 1 = Not at all important, 2 = Slightly important, 3 = Moderately important,   4 = Very important, 5 = Extremely important
 
-* Seafood types: Tuna, Shrimp, Salmon, Flounder, Blue Crab, Clams, Mullet, Oysters (8)
-** Qualities: Healthy, Local, Safe, Tasty, Affordable, Sustainable, Fresh, Easy Access, Local Culture, Local Economies, Local Environment (11)
+ ** Seafood types: Tuna, Shrimp, Salmon, Flounder, Blue Crab, Clams, Mullet, Oysters (8)
+ 
+ *** Qualities: Healthy, Local, Safe, Tasty, Affordable, Sustainable, Fresh, Easy Access, Local Culture, Local Economies, Local Environment (11)
 
 ## Data structure: Demographics
 
 Demographic Category | Response choices | Counts
 ----- | -------- | ---------
-Age | 1=19 or younger, 2=20-29, 3=30-39, 4=40-49, 5=50-59, 6=60-69, 7=70 or older, 8=Prefer not to answer | 
-Gender | 
-3. Are seafood values predicted by demographic variables such as age or education level? |   | Age, Gender, Education Level, Political Party, Race, Income Level (6)
+Age | 1=19 or younger | 74
+.    | 2=20-29 | 201
+.    | 3=30-39 | 170
+.    | 4=40-49 | 159
+.    | 5=50-59 | 156
+.    | 6=60-69 | 172
+.    | 7=70 or older | 100
+.    | 8=Prefer not to answer | 8
+Education level | 1=Less than high school | 35
+.    | 2=High school graduate | 229
+.    | 3=Some college | 302
+.    | 4=2 year degree | 167
+.    | 5=4 year degree | 382
+.    | 6=Professional degree | 260
+.    | 7=Doctorate | 49
+.    | 8=Prefer not to answer | 12 
+Political party | 1=Republican | 449
+.    | 2=Democrat | 459
+.    | 3=Independent | 384
+.    | 4=Other | 28
+.    | 5=Prefer not to answer | 116
 
 
 \newpage
@@ -105,17 +124,35 @@ Gender |
  [explanatory text]
  
 ```{r freq general}
-freq.general <- as.data.frame(survey.dat$Frequency_General) 
-freq.general <- freq.general %>% 
-  mutate(Overall_Frequency = survey.dat$Frequency_General + 1)
+freq.gen <- as.data.frame(table(survey.dat$Frequency_General))
+freq.gen <- freq.gen %>% 
+  rename(Response = Var1) %>% 
+  mutate(Response = as.numeric(Response) + 1)
+freq.gen[7,] <- c(1,0)
+
+freq.response.meaning <- c("2 Once in the past year", 
+                           "3 A few times in the past year",
+                           "4 Once a month",
+                           "5 A few times every month",
+                           "6 Once a week",
+                           "7 A few times a week",
+                           "1 Never")
+freq.gen$Response <- freq.response.meaning
+
+
 freq.general.mean <- freq.general %>% 
   summarize(Overall_Mean = mean(Overall_Frequency))
 
-```
+ggplot(data = freq.gen, aes(x = Response, y = Freq)) +
+  geom_bar(stat = "identity") +
+  labs(x = "All Seafood", y = "Count", title = "How often did you eat seafood in the last year?") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.6), 
+        plot.title = element_text(hjust=0.5))
 
+```
 freq.general mean = 4.76
 
-- frequency general?
+
 - map of counties where respondents live?
 
 
@@ -126,39 +163,12 @@ freq.general mean = 4.76
 
 
 
-## Question 1: When consumers buy seafood, which species do they prefer? 
+## Question 1a: When consumers buy seafood, which species do they prefer? 
 
-```{r kable freq}
+```{r freq violin}
 # Selecting the relevant columns from the raw data frame
 freq.sp <- select(survey.dat, Frequency_Tuna:Frequency_Oysters)
 
-# Finding means
-freq.sp.mean <- freq.sp %>% 
-  # Adding 1 to all cells to eliminate 0s
-  mutate(Frequency_Tuna = Frequency_Tuna + 1,
-         Frequency_Shrimp = Frequency_Shrimp + 1,
-         Frequency_Salmon = Frequency_Salmon + 1,
-         Frequency_Flounder = Frequency_Flounder + 1,
-         Frequency_BlueCrab = Frequency_BlueCrab + 1,
-         Frequency_Clams = Frequency_Clams + 1,
-         Frequency_Mullet = Frequency_Mullet + 1,
-         Frequency_Oysters = Frequency_Oysters + 1) %>% 
-  # Finding the mean response per species
-  summarize(Tuna = round(mean(Frequency_Tuna), 2),
-            Shrimp = round(mean(Frequency_Shrimp), 2),
-            Salmon = round(mean(Frequency_Salmon), 2),
-            Flounder = round(mean(Frequency_Flounder), 2),
-            BlueCrab = round(mean(Frequency_BlueCrab), 2),
-            Clams = round(mean(Frequency_Clams), 2),
-            Mullet = round(mean(Frequency_Mullet), 2),
-            Oysters = round(mean(Frequency_Oysters), 2)) %>% 
-  pivot_longer(Tuna:Oysters, names_to = "Species", values_to = "Mean")
-
-freq.means.table <- knitr::kable(freq.sp.mean, caption = "Mean response: How often do you eat the following type of seafood?")
-freq.means.table
-```
-
-```{r freq violin}
 # Wrangling data for violin plot using pivot_longer
 freq.sp.pivot <- freq.sp %>% 
   rename(Tuna = Frequency_Tuna,
@@ -185,7 +195,14 @@ freq.pivot.violin
 
 ```
 
-```{r frequency}
+[explanation]
+
+
+
+
+
+
+```{r frequency, fig.height=8, fig.cap = "How often do you eat the following type of seafood?"}
 # Frequency of each response per seafood type
 freq.sp.Tuna <- as.data.frame(table(freq.sp$Frequency_Tuna))
 freq.sp.Shrimp <- as.data.frame(table(freq.sp$Frequency_Shrimp))
@@ -218,49 +235,49 @@ freq.sp.Oysters$Var1 <- freq.response.meaning
 freq.Tuna.bar <- ggplot(freq.sp.Tuna, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Tuna") + 
-  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 300, 600, 900, 1200))
 
 freq.Shrimp.bar <- ggplot(freq.sp.Shrimp, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Shrimp") + 
-  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 300, 600, 900, 1200))
 
 freq.Salmon.bar <- ggplot(freq.sp.Salmon, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Salmon") + 
-  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 300, 600, 900, 1200))
 
 freq.Flounder.bar <- ggplot(freq.sp.Flounder, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Flounder") + 
-  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 300, 600, 900, 1200))
 
 freq.BlueCrab.bar <- ggplot(freq.sp.BlueCrab, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Blue Crab") + 
-  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 300, 600, 900, 1200))
 
 freq.Clams.bar <- ggplot(freq.sp.Clams, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Clams") + 
-  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 300, 600, 900, 1200))
 
 freq.Mullet.bar <- ggplot(freq.sp.Mullet, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Mullet") + 
-  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 300, 600, 900, 1200))
 
 freq.Oysters.bar <- ggplot(freq.sp.Oysters, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Oysters") + 
-  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
+  scale_x_continuous(limits = c(0, 1200), breaks = c(0, 300, 600, 900, 1200))
 
 # 4x2 plot presentation
 plot_grid(freq.Tuna.bar, freq.Shrimp.bar, freq.Salmon.bar, freq.Flounder.bar, freq.BlueCrab.bar, freq.Clams.bar, freq.Mullet.bar, freq.Oysters.bar, ncol = 2)
 
 ```
 
-[explanation of frequency findings. also add fig.cap above]
+[explanation of frequency findings]
 
 
 
@@ -274,9 +291,9 @@ plot_grid(freq.Tuna.bar, freq.Shrimp.bar, freq.Salmon.bar, freq.Flounder.bar, fr
 
 
 
-### Question 1a: Do consumers prefer wild or farmed fish?
+### Question 1b: Do consumers prefer wild or farmed fish?
 
-```{r preference}
+```{r preference, fig.height=8, fig.cap="Do you prefer wild-caught or farmed versions of these seafood?"}
 # Selecting the relevant columns from the raw data frame
 pref.sp <- select(survey.dat, Preference_Tuna:Preference_Oysters)
 
@@ -359,7 +376,7 @@ pref.Oysters.bar <- ggplot(pref.sp.Oysters, aes(y = Var1, x = Freq)) +
 plot_grid(pref.Tuna.bar, pref.Shrimp.bar, pref.Salmon.bar, pref.Flounder.bar, pref.BlueCrab.bar, pref.Clams.bar, pref.Mullet.bar, pref.Oysters.bar, ncol = 2)
 ```
 
-[explanation of findings. also add fig.cap above]
+[explanation of findings]
 
 
 
@@ -367,9 +384,9 @@ plot_grid(pref.Tuna.bar, pref.Shrimp.bar, pref.Salmon.bar, pref.Flounder.bar, pr
 
 
 
-## Question 2: What qualities do consumers associate with seafood?  What qualities do they value in seafood?
+## Question 2a: What qualities do consumers associate with seafood?  
 
-```{r qualities}
+```{r qualities, fig.height = 9, fig.cap="How do you associate the following qualities with wild vs. farmed seafood?"}
 # Selecting the relevant columns from the raw data frame
 qual.sp <- select(survey.dat, Qualities_Healthy:Qualities_Fresh)
 
@@ -388,9 +405,9 @@ qual.sp.Fresh <- as.data.frame(table(qual.sp$Qualities_Fresh))
 
 # Renaming Response column and removing option 5 "I don't know"
 qual.response.meaning <- c("4 More associated with wild caught", 
-                           "3 Equally associated w/ wild caught & farmed", 
+                           "3 Equally associated", 
                            "2 More associated with farmed",
-                           "1 Associated w/ neither wild caught nor farmed")
+                           "1 Associated w/ neither")
 
 qual.sp.Healthy <- qual.sp.Healthy[-c(5),]
 qual.sp.Healthy$Var1 <- qual.response.meaning
@@ -419,73 +436,173 @@ qual.sp.Fresh$Var1 <- qual.response.meaning
 qual.Healthy.bar <- ggplot(qual.sp.Healthy, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Healthy") + 
-  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 400, 800))
 
 qual.Local.bar <- ggplot(qual.sp.Local, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Local") + 
-  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 400, 800))
 
 qual.Safe.bar <- ggplot(qual.sp.Safe, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Safe") + 
-  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 400, 800))
 
 qual.Local_Economies.bar <- ggplot(qual.sp.Local_Economies, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Local Economies") + 
-  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 400, 800))
 
 qual.Tasty.bar <- ggplot(qual.sp.Tasty, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Tasty") + 
-  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 400, 800))
 
 qual.Affordable.bar <- ggplot(qual.sp.Affordable, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Affordable") + 
-  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 400, 800))
 
 qual.Local_Culture.bar <- ggplot(qual.sp.Local_Culture, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Local Culture") + 
-  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 400, 800))
 
 qual.Sustainable.bar <- ggplot(qual.sp.Sustainable, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Sustainable") + 
-  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 400, 800))
 
 qual.Easy_Access.bar <- ggplot(qual.sp.Easy_Access, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Easy Access") + 
-  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 400, 800))
 
 qual.Local_Environments.bar <- ggplot(qual.sp.Local_Environments, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Local Environments") + 
-  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 400, 800))
 
 qual.Fresh.bar <- ggplot(qual.sp.Fresh, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
   labs(y = "Response", x = "Count", title = "Fresh") + 
-  scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
+  scale_x_continuous(limits = c(0, 800), breaks = c(0, 400, 800))
 
 # 6x2 plot presentation
 plot_grid(qual.Tasty.bar, qual.Fresh.bar, qual.Healthy.bar, qual.Safe.bar, qual.Sustainable.bar, qual.Affordable.bar, qual.Easy_Access.bar, qual.Local.bar, qual.Local_Culture.bar, qual.Local_Economies.bar, qual.Local_Environments.bar, ncol = 2)
 ```
 
-[explanation of findings. also add fig.cap above]
+[explanation of findings]
 
 
 
 
+## Question 2b: What qualities do consumers value in seafood?
+
+```{r importance, fig.cap="How important are the following qualities?"}
+importance <- survey.dat %>% 
+  select(Importance_Health:Importance_Fresh, Age_corrected, Education, Political_Party) %>% 
+   rename(Health = Importance_Health,
+         Local = Importance_Local,
+         Safe = Importance_Safe,
+         Economies = Importance_Local_Economies,
+         Tasty = Importance_Tasty,
+         Affordable = Importance_Affordable,
+         Culture = Importance_Local_Culture,
+         Sustainable = Importance_Sustainable,
+         Accessibility = Importance_Easy_Access,
+         Environment = Importance_Local_Environments,
+         Fresh = Importance_Fresh,
+         Age = Age_corrected)
+
+columnnames <- c("Age", "Education", "Political_Party")
+importance[columnnames] <- lapply(importance[columnnames], factor)
+
+import.summary <- importance %>% 
+  summarize(Health = mean(Health),
+            Local = mean(Local),
+            Safe = mean(Safe),
+            Economies = mean(Economies),
+            Tasty = mean(Tasty),
+            Affordable = mean(Affordable),
+            Culture = mean(Culture),
+            Sustainable = mean(Sustainable),
+            Accessible = mean(Accessibility),
+            Environment = mean(Environment),
+            Fresh = mean(Fresh)) %>% 
+  pivot_longer(Health:Fresh, names_to = "Value", values_to = "Mean")
+
+ggplot(import.summary, aes(x = Value, y = Mean)) +
+  geom_point(size = 3) +
+  scale_y_continuous(limits = c(1,5)) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.65), 
+        plot.title = element_text(hjust=0.5)) +
+  labs(title = "Relative Importance of Values Associated with Seafood", 
+       y = "Relative Importance (mean)", 
+       x = "Values")
+```
 
 
+## Question 3: Are valued seafood qualities predicted by demographic variables such as age or education level?
 
-## Question 3: Are seafood values predicted by demographic variables such as age or education level?
+Fresh tasty healthy local - qualities most associated with wild
+
+```{r}
+# Creating separate dataframes per variable to eliminate unwanted rows
+demo.age <- importance %>% 
+  filter(Age != 8)
+
+demo.ed <- importance %>% 
+  filter(Education != 8)
+
+demo.party <- importance %>% 
+  filter(Political_Party == 1 | Political_Party == 2)
+```
 
 
+```{r fresh demo}
+fresh.lm.age <- lm(data = demo.age, Fresh ~ Age)
+summary(fresh.lm.age) 
+
+fresh.lm.education <- lm(data = demo.ed, Fresh ~ Education)
+summary(fresh.lm.education)
+
+fresh.lm.political <- lm(data = demo.party, Fresh ~ Political_Party)
+summary(fresh.lm.political)
+```
+
+```{r local}
+local.lm.age <- lm(data = demo.age, Local ~ Age)
+summary(local.lm.age) #age 6 cares slightly more
+
+local.lm.education <- lm(data = demo.ed, Local ~ Education)
+summary(local.lm.education) # ed3 significant
+
+local.lm.political <- lm(data = demo.party, Local ~ Political_Party)
+summary(local.lm.political) # no significance
+```
+
+```{r tasty}
+tasty.lm.age <- lm(data = demo.age, Tasty ~ Age)
+summary(tasty.lm.age) #age 6 cares slightly more
+
+tasty.lm.education <- lm(data = demo.ed, Tasty ~ Education)
+summary(tasty.lm.education) # ed3 significant
+
+tasty.lm.political <- lm(data = demo.party, Tasty ~ Political_Party)
+summary(tasty.lm.political) # no significance
+```
+
+```{r healthy}
+health.lm.age <- lm(data = demo.age, Health ~ Age)
+summary(health.lm.age) #age 6 cares slightly more
+
+health.lm.education <- lm(data = demo.ed, Health ~ Education)
+summary(health.lm.education) # ed3 significant
+
+health.lm.political <- lm(data = demo.party, Health ~ Political_Party)
+summary(health.lm.political) # no significance
+```
 
 
 \newpage
