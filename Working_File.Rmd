@@ -7,7 +7,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include=FALSE}
+```{r setup knitr}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -24,12 +24,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Setup
 
-```{r setup}
+```{r setup load packages, eval = FALSE}
 getwd()
 library(tidyverse)
 library(ggplot2)
 library(reshape2)
+```
 
+```{r setup read data, message = FALSE, warning = FALSE}
 survey.dat <- read.csv("./Data/Raw/AquacultureSurveyData.csv")
 survey.codes <- read.csv("./Data/Raw/AquacultureSurveyCodes.csv")
 
@@ -41,7 +43,7 @@ mytheme <- theme_light() +
 theme_set(mytheme)
 ```
 
-# Basic overview questions
+# Basic overview explanations & questions
 
 1. Make a dataframe just for species-related data - general analysis
       -> work w/ separate dataframes for each type of data (frequency, form, etc)?
@@ -54,9 +56,13 @@ theme_set(mytheme)
       *How do people prefer to buy their seafood?
       *Do people prefer wild-caught or farmed seafood?
 
-## Frequency Analysis
+### Frequency Analysis
 
-```{r frequency} 
+* Selecting frequency data by fish species type
+* Adding in qualitative explanation of the numerical label
+* Plotting the data as a scatterplot 
+
+```{r frequency, fig.align = "left", fig.cap = "Scatterplot of the frequency of seafood consumption based on species"} 
 freq.sp <- select(survey.dat, Frequency_Tuna:Frequency_Oysters)
 
 freq.sp.Tuna <- as.data.frame(table(freq.sp$Frequency_Tuna))
@@ -114,9 +120,15 @@ ggplot(freq.sp.summary.long, aes(y=Response_Explanation, x=value)) +
 
 ```
 
-### Frequency bar plots 4/24/21
+Based on this analysis, it appears as though respondents tended to eat shrimp more than the other species and tended to eat mullet less than the other species. However, the manner in which the chart conveys the information masks some of the detail. With that in mind, we explore other means of rendering the data. 
 
-```{r frequency bar}
+### Frequency Analysis: bar plots 4/24/21
+
+* Make separate bar plots for each species
+* Use Cowplot to show all species-specific bar plots alongside one another for comparison
+
+```{r frequency bar, fig.align = "left", fig.cap = "Barplot of the frequency of seafood consumption based on species"}
+
 freq.response.meaning <- c("1 Never", 
                            "2 Once in the past year", 
                            "3 A few times in the past year",
@@ -133,7 +145,6 @@ freq.sp.BlueCrab$Var1 <- freq.response.meaning
 freq.sp.Clams$Var1 <- freq.response.meaning
 freq.sp.Mullet$Var1 <- freq.response.meaning
 freq.sp.Oysters$Var1 <- freq.response.meaning
-
 
 freq.Tuna.bar <- ggplot(freq.sp.Tuna, aes(y = Var1, x = Freq)) +
   geom_bar(stat = "identity") +
@@ -176,14 +187,13 @@ freq.Oysters.bar <- ggplot(freq.sp.Oysters, aes(y = Var1, x = Freq)) +
   scale_x_continuous(limits = c(0, 1200), breaks = c(0, 200, 400, 600, 800, 1000, 1200))
 
 cowplot::plot_grid(freq.Tuna.bar, freq.Shrimp.bar, freq.Salmon.bar, freq.Flounder.bar, freq.BlueCrab.bar, freq.Clams.bar, freq.Mullet.bar, freq.Oysters.bar, ncol = 2)
-
 ```
 
+This revised means of conveying the data does a much clearer job of showing that respondents tend to eat Shrimp, Tuna, and Salmon more often than they eat the other species. Respondents overwhelmingly never eat Mullet. Respondents seem to eat Blue Crab, Clams, and Oysters very infrequently if ever. However,  this information is still pulled apart by frequency. The below visualization simplifies the data even further, capturing the number of respondents who ever consume each species. 
 
+### Frequency Analysis: simplified scatterplot 
 
-### Frequency visualization 1
-
-```{r}
+```{r simplified scatter, fig.align = "left", fig.cap = "X"}
 #which species are eaten most frequently
 freq.sp.summary$Response <- as.numeric(freq.sp.summary$Response)
 freq.sp.summary.which <- freq.sp.summary %>% 
@@ -209,16 +219,16 @@ freq.sp.summary.which <- freq.sp.summary %>%
 #plot most frequently eaten sp
 ggplot(freq.sp.summary.which) +
   geom_point(aes(y = Species, x = ResponseMean)) + 
-  labs(title = "Title", 
+  labs(title = "Overall Number of Respondents Who Eat Certain Fish Types", 
        y = "Number of Responses", 
        x = "Species") + 
   theme(axis.text.x = element_text(angle = 45), 
         plot.title = element_text(hjust=0.5))
 ```
 
-### Frequency visualization 2 (better)
+### Frequency Analysis: violin & box plots
 
-```{r}
+```{r box and violin, fig.align = "left", fig.cap = "X"}
 freq.sp.pivot <- freq.sp %>% 
   rename(Tuna = Frequency_Tuna,
          Shrimp = Frequency_Shrimp,
@@ -266,9 +276,14 @@ freq.pivot.box <-
 freq.pivot.box
 ```
 
-## Where/Source Analysis
+The above boxplot and violin plot does a strong job of showing the spread of the data, thereby complementing the simplified scatterplot. 
+### Where/Source Analysis
 
-```{r where}
+* Selecting data on where respondents purchase their seafood by species type
+* Adding in qualitative explanation of the numerical label
+* Plotting the data as a scatterplot 
+
+```{r where, fig.align = "left", fig.cap = "X"}
 where.sp <- select(survey.dat, Where_Tuna:Where_Oysters)
 
 where.sp.Tuna <- as.data.frame(table(where.sp$Where_Tuna))
@@ -325,9 +340,15 @@ ggplot(where.sp.summary.long, aes(y=Response_Explanation, x=value)) +
         plot.title = element_text(hjust=0.5))
 ```
 
-## Preference analysis
+This rendering of the data helps us see that most respondents purchase their seafood from the grocery store while a smaller but still significant number of the respondents get their seafood at restaurants. On the other hand, very few respondents identified that they got their seafood from a CSF or that they caught/grew the seafood or that a friend or family member caught/grew the seafood.
 
-```{r preference}
+### Preference Analysis
+
+* Selecting data on the types of seafood respondents prefer
+* Adding in qualitative explanation of the numerical label
+* Plotting the data as a scatterplot 
+
+```{r preference, fig.align = "left", fig.cap = "X"}
 pref.sp <- select(survey.dat, Preference_Tuna:Preference_Oysters)
 
 pref.sp.Tuna <- as.data.frame(table(pref.sp$Preference_Tuna))
@@ -383,9 +404,14 @@ ggplot(pref.sp.summary.long, aes(y=Response_Explanation, x=value)) +
         plot.title = element_text(hjust=0.5))
 ```
 
-### Preference bar plots 4/24/21
+The above scatterplot helps communicate that, on the whole, respondents seem to have some degree of preference for wild caught seafood or don't have any preference between wild caught and farmed seafood. However, very few respondents identified any degree of preference for farmed fish. Again, because it's a bit more challenging to parse out species-level details, we explore different ways of rendering the data below. 
 
-```{r preference bar}
+### Preference Analysis: bar plots 4/24/21
+
+* Make separate bar plots for each species
+* Use Cowplot to show all species-specific bar plots alongside one another for comparison
+
+```{r preference bar, fig.align = "left", fig.cap = "X"}
 pref.response.meaning <- c("5 Strongly prefer wild caught", 
                            "4 Slightly prefer wild caught", 
                            "3 No preference",
@@ -451,12 +477,17 @@ pref.Oysters.bar <- ggplot(pref.sp.Oysters, aes(y = Var1, x = Freq)) +
   scale_x_continuous(limits = c(0, 700), breaks = c(0, 200, 400, 600))
 
 cowplot::plot_grid(pref.Tuna.bar, pref.Shrimp.bar, pref.Salmon.bar, pref.Flounder.bar, pref.BlueCrab.bar, pref.Clams.bar, pref.Mullet.bar, pref.Oysters.bar, ncol = 2)
-
 ```
 
-## Qualities analysis 
+These species-specific barplots do a clear job of showing that the preference trends remain relatively uniform across all species but with a couple interesting points. For those species that respondents said they consumed less often, Mullet and Blue Crab, respondents showed a larger "stronger preference for wild caught." Meanwhile, for those species that respondents said they consumed more often, Tuna, Shrimp, and Salmon, respondents identified "no preference" between farmed and wild-caught a little more readily. 
 
-```{r qualities}
+### Qualities Analysis 
+
+* Selecting data the qualities respondents prioritize for their seafood
+* Adding in qualitative explanation of the numerical label
+* Plotting the data as a scatterplot 
+
+```{r qualities, fig.align = "left", fig.cap = "X"}
 qual.sp <- select(survey.dat, Qualities_Healthy:Qualities_Fresh)
 
 qual.sp.Healthy <- as.data.frame(table(qual.sp$Qualities_Healthy))
@@ -520,9 +551,11 @@ ggplot(qual.sp.summary.long, aes(y=Response_Explanation, x=value)) +
         plot.title = element_text(hjust=0.5))
 ```
 
-### Qualities bar plots 4/24/21
+There is quite the spread in associations of particular qualities with farmed or wild-caught seafood. Given this spread and the challenges with parsing apart the data in this format, we explore a different way of visualizing data below. 
 
-```{r qualities bar}
+### Qualities Analysis: bar plots 4/24/21
+
+```{r qualities bar, fig.align = "left", fig.cap = "X"}
 qual.response.meaning <- c("4 More associated with wild caught", 
                            "3 Equally associated w/ wild caught & farmed", 
                            "2 More associated with farmed",
@@ -608,12 +641,13 @@ qual.Fresh.bar <- ggplot(qual.sp.Fresh, aes(y = Var1, x = Freq)) +
   scale_x_continuous(limits = c(0, 800), breaks = c(0, 200, 400, 600, 800))
 
 cowplot::plot_grid(qual.Tasty.bar, qual.Fresh.bar, qual.Healthy.bar, qual.Safe.bar, qual.Sustainable.bar, qual.Affordable.bar, qual.Easy_Access.bar, qual.Local.bar, qual.Local_Culture.bar, qual.Local_Economies.bar, qual.Local_Environments.bar, ncol = 2)
-
 ```
 
-## Importance analysis
+This means of rendering the data shows that folks tend to associate tasty, fresh, safe, healthy, and the various local categories more heavily with wild-caught seafood. However, respondents tent to associate sustainability, easy access, and affordability more heavily with farmed seafood. 
 
-```{r importance}
+### Importance Analysis
+
+```{r importance, fig.align = "left", fig.cap = "X"}
 importance <- survey.dat %>% 
   select(Importance_Health:Importance_Farmed, Age_corrected, Gender_original, Education, Political_Party, Race1, Income) %>% 
    rename(Health = Importance_Health,
@@ -683,7 +717,9 @@ ggplot(import.summary, aes(x = Value, y = Mean)) +
        x = "Values")
 ```
 
-```{r wild}
+Here, we can see that respondents prioritized certain qualities like safety, tastiness, freshness, and healthiness of the seafood but didn't seem to place as much emphasis on other qualities like whether the seafood was farmed or wild.
+
+```{r wild, fig.align = "left", fig.cap = "X"}
 #models
 importance.lm.age <- lm(data = importance, Wild ~ Age)
 summary(importance.lm.age) #older people care more about wild?
@@ -711,7 +747,7 @@ importance.plot <- ggplot(importance, aes(x = Education, y = Wild)) +
 importance.plot
 ```
 
-```{r fresh}
+```{r fresh, fig.align = "left", fig.cap = "X"}
 #models
 fresh.lm.age <- lm(data = importance, Fresh ~ Age)
 summary(fresh.lm.age) #older people care more about fresh
@@ -740,7 +776,7 @@ fresh.plot <- ggplot(importance, aes(x = Education, y = Fresh)) +
 fresh.plot
 ```
 
-```{r Sustainable}
+```{r Sustainable, fig.align = "left", fig.cap = "X"}
 summary(importance$Sustainable)
 
 sust.lm.age <- lm(data = importance, Sustainable ~ Age)
@@ -769,7 +805,7 @@ sust.plot <- ggplot(importance, aes(x = Education, y = Sustainable)) +
 sust.plot
 ```
 
-```{r local}
+```{r local, fig.align = "left", fig.cap = "X"}
 summary(importance$Local)
 
 local.lm.age <- lm(data = importance, Local ~ Age)
