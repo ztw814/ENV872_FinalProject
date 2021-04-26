@@ -139,10 +139,6 @@ freq.response.meaning <- c("2 Once in the past year",
                            "1 Never")
 freq.gen$Response <- freq.response.meaning
 
-
-freq.general.mean <- freq.general %>% 
-  summarize(Overall_Mean = mean(Overall_Frequency))
-
 ggplot(data = freq.gen, aes(x = Response, y = Freq)) +
   geom_bar(stat = "identity") +
   labs(x = "All Seafood", y = "Count", title = "How often did you eat seafood in the last year?") +
@@ -165,7 +161,7 @@ freq.general mean = 4.76
 
 ## Question 1a: When consumers buy seafood, which species do they prefer? 
 
-```{r freq violin}
+```{r freq violin, fig.cap = "Violin plot and means of the frequency of seafood consumption based on type"}
 # Selecting the relevant columns from the raw data frame
 freq.sp <- select(survey.dat, Frequency_Tuna:Frequency_Oysters)
 
@@ -195,14 +191,12 @@ freq.pivot.violin
 
 ```
 
-[explanation]
+Based on this analysis, it appears as though respondents tended to eat shrimp more than the other species and tended to eat mullet less than the other species. However, the manner in which the chart conveys the information masks some of the detail. With that in mind, we explore other means of rendering the data. 
 
 
 
 
-
-
-```{r frequency, fig.height=8, fig.cap = "How often do you eat the following type of seafood?"}
+```{r frequency, fig.height=8, fig.cap = "Bar plot of the frequency of seafood consumption based on type"}
 # Frequency of each response per seafood type
 freq.sp.Tuna <- as.data.frame(table(freq.sp$Frequency_Tuna))
 freq.sp.Shrimp <- as.data.frame(table(freq.sp$Frequency_Shrimp))
@@ -276,8 +270,7 @@ freq.Oysters.bar <- ggplot(freq.sp.Oysters, aes(y = Var1, x = Freq)) +
 plot_grid(freq.Tuna.bar, freq.Shrimp.bar, freq.Salmon.bar, freq.Flounder.bar, freq.BlueCrab.bar, freq.Clams.bar, freq.Mullet.bar, freq.Oysters.bar, ncol = 2)
 
 ```
-
-[explanation of frequency findings]
+This revised means of conveying the data does a much clearer job of showing that respondents tend to eat Shrimp, Tuna, and Salmon more often than they eat the other species. Respondents overwhelmingly never eat Mullet. Respondents seem to eat Blue Crab, Clams, and Oysters very infrequently if ever. However,  this information is still pulled apart by frequency. The below visualization simplifies the data even further, capturing the number of respondents who ever consume each species. 
 
 
 
@@ -376,9 +369,9 @@ pref.Oysters.bar <- ggplot(pref.sp.Oysters, aes(y = Var1, x = Freq)) +
 plot_grid(pref.Tuna.bar, pref.Shrimp.bar, pref.Salmon.bar, pref.Flounder.bar, pref.BlueCrab.bar, pref.Clams.bar, pref.Mullet.bar, pref.Oysters.bar, ncol = 2)
 ```
 
-[explanation of findings]
+On the whole, respondents seem to have some degree of preference for wild caught seafood or don't have any preference between wild caught and farmed seafood. However, very few respondents identified any degree of preference for farmed fish. 
 
-
+The species-specific barplots do a clear job of showing that the preference trends remain relatively uniform across all species but with a couple interesting points. For those species that respondents said they consumed less often, Mullet and Blue Crab, respondents showed a larger "stronger preference for wild caught." Meanwhile, for those species that respondents said they consumed more often, Tuna, Shrimp, and Salmon, respondents identified "no preference" between farmed and wild-caught a little more readily. 
 
 
 
@@ -492,8 +485,9 @@ qual.Fresh.bar <- ggplot(qual.sp.Fresh, aes(y = Var1, x = Freq)) +
 plot_grid(qual.Tasty.bar, qual.Fresh.bar, qual.Healthy.bar, qual.Safe.bar, qual.Sustainable.bar, qual.Affordable.bar, qual.Easy_Access.bar, qual.Local.bar, qual.Local_Culture.bar, qual.Local_Economies.bar, qual.Local_Environments.bar, ncol = 2)
 ```
 
-[explanation of findings]
+There is quite the spread in associations of particular qualities with farmed or wild-caught seafood. Given this spread and the challenges with parsing apart the data in this format, we explore a different way of visualizing data below. 
 
+This means of rendering the data shows that folks tend to associate tasty, fresh, safe, healthy, and the various local categories more heavily with wild-caught seafood. However, respondents tent to associate sustainability, easy access, and affordability more heavily with farmed seafood. 
 
 
 
@@ -541,6 +535,12 @@ ggplot(import.summary, aes(x = Value, y = Mean)) +
        y = "Relative Importance (mean)", 
        x = "Values")
 ```
+
+Here, we can see that respondents prioritized certain qualities like safety, tastiness, freshness, and healthiness of the seafood but didn't seem to place as much emphasis on other qualities like whether the seafood was farmed or wild.
+
+
+
+
 
 
 ## Question 3: Are valued seafood qualities predicted by demographic variables such as age or education level?
