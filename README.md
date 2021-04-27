@@ -8,7 +8,11 @@
 
 <describe the purpose of this repository, the information it contains, and any relevant analysis goals. What, why, where, when, how?>
 
-This repository contains
+This repository answers the following questions:
+
+1. (a) When consumers buy seafood, which species do they prefer?  (b) Do they prefer wild or farmed fish?
+2. (a) What qualities do consumers associate with wild vs. farmed seafood?  (b) What qualities do they value in seafood?
+3. Are seafood values predicted by demographic variables such as age or education level?
 
 ## Investigators
 
