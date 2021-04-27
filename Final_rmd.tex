@@ -39,7 +39,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Insert title of project here},
+  pdftitle={Feelings about fish: An analysis of social survey results about seafood},
   pdfauthor={Zoe Wong, Molly Bruce},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
@@ -76,14 +76,15 @@
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 
-\title{Insert title of project here}
+\title{Feelings about fish: An analysis of social survey results about
+seafood}
 \usepackage{etoolbox}
 \makeatletter
 \providecommand{\subtitle}[1]{% add subtitle to \maketitle
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
-\subtitle{Web address for GitHub repository}
+\subtitle{\url{https://github.com/ztw814/ENV872_FinalProject}}
 \author{Zoe Wong, Molly Bruce}
 \date{}
 
@@ -93,14 +94,26 @@
 \newpage
 \tableofcontents 
 \newpage
-\listoftables 
-\newpage
 \listoffigures 
 \newpage
 
 \hypertarget{rationale-and-research-questions}{%
 \section{Rationale and Research
 Questions}\label{rationale-and-research-questions}}
+
+According to catch reconstructions, global fishing rates peaked in 1996
+at roughly 130 million tons of fished biomass or, according to reported
+catches, at roughly 85 million tons that same year (Pauly \& Zeller
+2016). In the wake of this peak and an accompanying recognition that
+seafood extraction remains unsustainable, many researchers have become
+increasingly interested in understanding how communities interact with
+seafood consumption, seafood sustainability, etc. Understanding how
+consumers and communities interact with seafood and sustainability
+concepts is the first, crucial step in beginning to to make more
+comprehensive progress toward achieving sustainable seafood extraction.
+This background sets the stage for both this data examination as well as
+the original research that collected the data on which this examination
+relies.
 
 \hypertarget{research-questions}{%
 \subsection{Research Questions}\label{research-questions}}
@@ -296,16 +309,19 @@ Political party & 1=Republican & 449\tabularnewline
 \hypertarget{exploratory-analysis}{%
 \section{Exploratory Analysis}\label{exploratory-analysis}}
 
-{[}explanatory text{]}
+Below, we explore and visualize how often respondents consume select
+seafood products, regardless of the seafood species.
 
+\begin{figure}
+\centering
 \includegraphics{Final_rmd_files/figure-latex/freq general-1.pdf}
-freq.general mean = 4.76
+\caption{Bar plot of the frequency of general seafood consumption}
+\end{figure}
 
-\begin{itemize}
-\tightlist
-\item
-  map of counties where respondents live?
-\end{itemize}
+Figure 1 shows the distribution of responses regarding frequency of
+seafood consumption in the last year. The mean frequency reported for
+all seafood consumption was 4.76. This means that the average respondent
+ate seafood between once a month and a few times per month.
 
 \newpage
 
@@ -317,6 +333,14 @@ freq.general mean = 4.76
 they
 prefer?}\label{question-1a-when-consumers-buy-seafood-which-species-do-they-prefer}}
 
+Figure 2 shows that respondents tend to eat Shrimp, Tuna, and Salmon
+more often than they eat the other species. Respondents overwhelmingly
+never eat Mullet. Respondents seem to eat Blue Crab, Clams, and Oysters
+very infrequently if ever. However, this information is still pulled
+apart by frequency. The below visualization simplifies the data even
+further, capturing the number of respondents who ever consume each
+species.
+
 \begin{figure}
 \centering
 \includegraphics{Final_rmd_files/figure-latex/freq violin-1.pdf}
@@ -324,22 +348,11 @@ prefer?}\label{question-1a-when-consumers-buy-seafood-which-species-do-they-pref
 based on type}
 \end{figure}
 
-Based on this analysis, it appears as though respondents tended to eat
-shrimp more than the other species and tended to eat mullet less than
-the other species. However, the manner in which the chart conveys the
-information masks some of the detail. With that in mind, we explore
-other means of rendering the data.
-
-\includegraphics{Final_rmd_files/figure-latex/frequency-1.pdf} This
-revised means of conveying the data does a much clearer job of showing
-that respondents tend to eat Shrimp, Tuna, and Salmon more often than
-they eat the other species. Respondents overwhelmingly never eat Mullet.
-Respondents seem to eat Blue Crab, Clams, and Oysters very infrequently
-if ever. However, this information is still pulled apart by frequency.
-The below visualization simplifies the data even further, capturing the
-number of respondents who ever consume each species.
-
-{[}explanation etc{]}
+\begin{figure}
+\centering
+\includegraphics{Final_rmd_files/figure-latex/frequency-1.pdf}
+\caption{Bar plot of the frequency of seafood consumption based on type}
+\end{figure}
 
 \hypertarget{question-1b-do-consumers-prefer-wild-or-farmed-fish}{%
 \subsubsection{Question 1b: Do consumers prefer wild or farmed
@@ -356,14 +369,16 @@ wild caught seafood or don't have any preference between wild caught and
 farmed seafood. However, very few respondents identified any degree of
 preference for farmed fish.
 
-The species-specific barplots do a clear job of showing that the
-preference trends remain relatively uniform across all species but with
-a couple interesting points. For those species that respondents said
-they consumed less often, Mullet and Blue Crab, respondents showed a
-larger ``stronger preference for wild caught.'' Meanwhile, for those
-species that respondents said they consumed more often, Tuna, Shrimp,
-and Salmon, respondents identified ``no preference'' between farmed and
-wild-caught a little more readily.
+Figure 3 does a clear job of showing that the preference trends remain
+relatively uniform across all species but with a couple interesting
+points. For those species that respondents said they consumed less
+often, Mullet and Blue Crab, respondents showed a larger ``stronger
+preference for wild caught.'' Meanwhile, for those species that
+respondents said they consumed more often, Tuna, Shrimp, and Salmon,
+respondents identified ``no preference'' between farmed and wild-caught
+a little more readily.
+
+\newpage
 
 \hypertarget{question-2a-what-qualities-do-consumers-associate-with-seafood}{%
 \subsection{Question 2a: What qualities do consumers associate with
@@ -377,15 +392,11 @@ vs.~farmed seafood?}
 \end{figure}
 
 There is quite the spread in associations of particular qualities with
-farmed or wild-caught seafood. Given this spread and the challenges with
-parsing apart the data in this format, we explore a different way of
-visualizing data below.
-
-This means of rendering the data shows that folks tend to associate
-tasty, fresh, safe, healthy, and the various local categories more
-heavily with wild-caught seafood. However, respondents tent to associate
-sustainability, easy access, and affordability more heavily with farmed
-seafood.
+farmed or wild-caught seafood, as shown in figure 4. Specifically, it
+seems as though respondents tend to associate tasty, fresh, safe,
+healthy, and the various local categories more heavily with wild-caught
+seafood. However, respondents tent to associate sustainability, easy
+access, and affordability more heavily with farmed seafood.
 
 \hypertarget{question-2b-what-qualities-do-consumers-value-in-seafood}{%
 \subsection{Question 2b: What qualities do consumers value in
@@ -397,321 +408,124 @@ seafood?}\label{question-2b-what-qualities-do-consumers-value-in-seafood}}
 \caption{How important are the following qualities?}
 \end{figure}
 
-Here, we can see that respondents prioritized certain qualities like
-safety, tastiness, freshness, and healthiness of the seafood but didn't
-seem to place as much emphasis on other qualities like whether the
-seafood was farmed or wild.
+In figure 5, we can see that respondents prioritized certain qualities
+like safety, tastiness, freshness, and healthiness of the seafood but
+didn't seem to place as much emphasis on other qualities like whether
+the seafood was farmed or wild.
+
+\newpage
 
 \hypertarget{question-3-are-valued-seafood-qualities-predicted-by-demographic-variables-such-as-age-or-education-level}{%
 \subsection{Question 3: Are valued seafood qualities predicted by
 demographic variables such as age or education
 level?}\label{question-3-are-valued-seafood-qualities-predicted-by-demographic-variables-such-as-age-or-education-level}}
 
-Fresh tasty healthy local - qualities most associated with wild
+Age is a predictor of the value respondents placed on the freshness if
+their seafood, with folks older than 19 placing more value on the
+freshness of their seafood. The low p-value (\textless.05) indicates
+that this association is statistically significant. However, the low r
+squared value means that age explains only \textasciitilde3.69\% of the
+variability in the data. Education is also a predictor of how a
+respondent values freshness. The low p-value again indicates that this
+association is statistically significant, though the r squared of 2.07\%
+means that it doesn't explain much variability in the data. Political
+party is not a significant predictor of the value a respondent places on
+the freshness of their seafood as told by the high p-value of .4211.
 
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = Fresh ~ Age, data = demo.age)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -3.6105 -0.5300  0.4151  0.4700  1.0000 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  4.00000    0.09923  40.311  < 2e-16 ***
-## Age2         0.34826    0.11607   3.001  0.00276 ** 
-## Age3         0.34118    0.11888   2.870  0.00419 ** 
-## Age4         0.58491    0.12012   4.869 1.30e-06 ***
-## Age5         0.55128    0.12049   4.575 5.33e-06 ***
-## Age6         0.61047    0.11867   5.144 3.22e-07 ***
-## Age7         0.53000    0.13089   4.049 5.53e-05 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.8536 on 1025 degrees of freedom
-## Multiple R-squared:  0.03693,    Adjusted R-squared:  0.0313 
-## F-statistic: 6.551 on 6 and 1025 DF,  p-value: 8.386e-07
-\end{verbatim}
+Age is a predictor of the value respondents placed on the local nature
+of their seafood. The low p-value (\textless.05) indicates that this
+association is statistically significant. However, the low r squared
+value means that age explains only \textasciitilde1.78\% of the
+variability in the data. Education is also a predictor of how a
+respondent values the local nature of their seafood. The low p-value
+again indicates that this association is statistically significant,
+though the r squared of 1.48\% means that it doesn't explain much
+variability in the data. Political party is not a significant predictor
+of the value a respondent places on the local nature of their seafood as
+told by the high p-value of .2403.
 
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = Fresh ~ Education, data = demo.ed)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -3.6808 -0.5331  0.4215  0.4669  0.9143 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   4.0857     0.1330  30.730  < 2e-16 ***
-## Education2    0.3029     0.1428   2.122 0.034006 *  
-## Education3    0.4474     0.1404   3.186 0.001477 ** 
-## Education4    0.4772     0.1462   3.263 0.001128 ** 
-## Education5    0.4928     0.1389   3.548 0.000401 ***
-## Education6    0.5951     0.1416   4.202 2.81e-05 ***
-## Education7    0.5265     0.1741   3.025 0.002534 ** 
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.7866 on 1417 degrees of freedom
-## Multiple R-squared:  0.02069,    Adjusted R-squared:  0.01654 
-## F-statistic: 4.989 on 6 and 1417 DF,  p-value: 4.553e-05
-\end{verbatim}
+Age is a predictor of the value respondents placed on the taste of their
+seafood. The low p-value (\textless.05) indicates that this association
+is statistically significant. However, the low r squared value means
+that age explains only \textasciitilde1.41\% of the variability in the
+data. Education is also a predictor of how a respondent values the taste
+of their seafood. The low p-value again indicates that this association
+is statistically significant, though the r squared of 0.98\% means that
+it doesn't explain much variability in the data. Political party is not
+a significant predictor of the value a respondent places on the taste of
+their seafood as told by the high p-value of .1333.
 
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = Fresh ~ Political_Party, data = demo.party)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -3.6125 -0.5730  0.3875  0.4270  0.4270 
-## 
-## Coefficients:
-##                  Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)       4.61247    0.03488 132.243   <2e-16 ***
-## Political_Party2 -0.03949    0.04906  -0.805    0.421    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.7391 on 906 degrees of freedom
-## Multiple R-squared:  0.0007146,  Adjusted R-squared:  -0.0003883 
-## F-statistic: 0.6479 on 1 and 906 DF,  p-value: 0.4211
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = Local ~ Age, data = demo.age)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -2.6164 -0.6163 -0.2289  0.7711  1.8649 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  3.13514    0.14044  22.324  < 2e-16 ***
-## Age2         0.09372    0.16427   0.571  0.56845    
-## Age3         0.12957    0.16825   0.770  0.44142    
-## Age4         0.48122    0.17001   2.831  0.00474 ** 
-## Age5         0.37769    0.17053   2.215  0.02699 *  
-## Age6         0.37068    0.16796   2.207  0.02753 *  
-## Age7         0.12486    0.18525   0.674  0.50045    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 1.208 on 1025 degrees of freedom
-## Multiple R-squared:  0.01778,    Adjusted R-squared:  0.01203 
-## F-statistic: 3.093 on 6 and 1025 DF,  p-value: 0.005248
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = Local ~ Education, data = demo.ed)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -2.8846 -0.6911  0.3089  1.1154  1.5714 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  3.42857    0.20118  17.042   <2e-16 ***
-## Education2   0.07361    0.21601   0.341   0.7333    
-## Education3   0.11447    0.21252   0.539   0.5902    
-## Education4   0.08041    0.22126   0.363   0.7163    
-## Education5   0.26253    0.21019   1.249   0.2119    
-## Education6   0.45604    0.21429   2.128   0.0335 *  
-## Education7   0.40816    0.26341   1.550   0.1215    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 1.19 on 1417 degrees of freedom
-## Multiple R-squared:  0.01476,    Adjusted R-squared:  0.01059 
-## F-statistic: 3.537 on 6 and 1417 DF,  p-value: 0.001762
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = Local ~ Political_Party, data = demo.party)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -2.7734 -0.7734  0.2266  1.2266  1.3185 
-## 
-## Coefficients:
-##                  Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)       3.68151    0.05561  66.205   <2e-16 ***
-## Political_Party2  0.09191    0.07821   1.175     0.24    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 1.178 on 906 degrees of freedom
-## Multiple R-squared:  0.001522,   Adjusted R-squared:  0.0004197 
-## F-statistic: 1.381 on 1 and 906 DF,  p-value: 0.2403
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = Tasty ~ Age, data = demo.age)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -3.6667 -0.4677  0.3430  0.4647  0.5676 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  4.43243    0.08570  51.722   <2e-16 ***
-## Age2         0.03523    0.10024   0.351   0.7253    
-## Age3         0.10286    0.10267   1.002   0.3166    
-## Age4         0.19021    0.10374   1.834   0.0670 .  
-## Age5         0.23423    0.10406   2.251   0.0246 *  
-## Age6         0.22454    0.10249   2.191   0.0287 *  
-## Age7         0.24757    0.11304   2.190   0.0287 *  
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.7372 on 1025 degrees of freedom
-## Multiple R-squared:  0.01409,    Adjusted R-squared:  0.008321 
-## F-statistic: 2.442 on 6 and 1025 DF,  p-value: 0.02383
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = Tasty ~ Education, data = demo.ed)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -3.6615 -0.6122  0.3403  0.3444  0.7143 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   4.2857     0.1145  37.426  < 2e-16 ***
-## Education2    0.2645     0.1230   2.151  0.03162 *  
-## Education3    0.3699     0.1210   3.058  0.00227 ** 
-## Education4    0.3490     0.1259   2.771  0.00566 ** 
-## Education5    0.3740     0.1196   3.126  0.00181 ** 
-## Education6    0.3758     0.1220   3.081  0.00210 ** 
-## Education7    0.3265     0.1499   2.178  0.02958 *  
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.6775 on 1417 degrees of freedom
-## Multiple R-squared:  0.009764,   Adjusted R-squared:  0.005571 
-## F-statistic: 2.329 on 6 and 1417 DF,  p-value: 0.03051
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = Tasty ~ Political_Party, data = demo.party)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -3.6904 -0.6275  0.3096  0.3725  0.3725 
-## 
-## Coefficients:
-##                  Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)       4.69042    0.02980 157.394   <2e-16 ***
-## Political_Party2 -0.06297    0.04191  -1.502    0.133    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.6315 on 906 degrees of freedom
-## Multiple R-squared:  0.002485,   Adjusted R-squared:  0.001384 
-## F-statistic: 2.257 on 1 and 906 DF,  p-value: 0.1333
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = Health ~ Age, data = demo.age)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -3.3372 -0.3372 -0.0882  0.7610  0.9865 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  4.01351    0.11050  36.321   <2e-16 ***
-## Age2         0.14569    0.12925   1.127   0.2599    
-## Age3         0.07472    0.13239   0.564   0.5726    
-## Age4         0.22548    0.13377   1.686   0.0922 .  
-## Age5         0.27495    0.13418   2.049   0.0407 *  
-## Age6         0.32370    0.13215   2.449   0.0145 *  
-## Age7         0.24649    0.14576   1.691   0.0911 .  
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.9506 on 1025 degrees of freedom
-## Multiple R-squared:  0.0107, Adjusted R-squared:  0.004912 
-## F-statistic: 1.848 on 6 and 1025 DF,  p-value: 0.0868
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = Health ~ Education, data = demo.ed)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -3.3500 -0.3477  0.6500  0.7120  1.2000 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   3.8000     0.1537  24.723  < 2e-16 ***
-## Education2    0.3528     0.1650   2.138 0.032685 *  
-## Education3    0.5477     0.1624   3.373 0.000763 ***
-## Education4    0.4335     0.1690   2.565 0.010431 *  
-## Education5    0.4880     0.1606   3.039 0.002421 ** 
-## Education6    0.5500     0.1637   3.359 0.000802 ***
-## Education7    0.4245     0.2012   2.109 0.035090 *  
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.9093 on 1417 degrees of freedom
-## Multiple R-squared:  0.01248,    Adjusted R-squared:  0.008299 
-## F-statistic: 2.985 on 6 and 1417 DF,  p-value: 0.006693
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = Health ~ Political_Party, data = demo.party)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -3.3486 -0.3486  0.6514  0.6514  0.6882 
-## 
-## Coefficients:
-##                  Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)       4.31180    0.03962  108.83   <2e-16 ***
-## Political_Party2  0.03678    0.05573    0.66    0.509    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.8395 on 906 degrees of freedom
-## Multiple R-squared:  0.0004806,  Adjusted R-squared:  -0.0006226 
-## F-statistic: 0.4356 on 1 and 906 DF,  p-value: 0.5094
-\end{verbatim}
+Age overall was not a significant predictor of how respondents valued
+health (p\textgreater0.05). However, the age ranges of 50-59 and 60-69
+were significant and the estimates were positive, indicating that
+respondents in these age ranges valued health as a quality of seafood
+more than teenagers. Education was a significant predictor of how
+respondents valued health (p = 0.007). All estimates were positive,
+indicating that a high school education or more predicted that
+respondents would value health in their seafood more highly. Political
+party was not a significant predictor of how respondents valued health
+(p\textgreater0.05).
 
 \newpage
 
 \hypertarget{summary-and-conclusions}{%
 \section{Summary and Conclusions}\label{summary-and-conclusions}}
 
+This analysis communicates several key findings--findings that (1)
+should inform future inquiries as researchers aim to better understand
+community and consumer understandings of seafood and sustainability
+issues, and (2) may help researchers make positive strides toward
+pursuing education and engagement efforts on these issues.
+
+First, respondents tend to consume certain species of seafood in larger
+volumes and at higher frequencies than other species. Shrimp, Tuna, and
+Salmon top the list. Meanwhile, respondents do not consume as much
+Mullet, Blue Crab, Oyster, or Clams. These consumption practices and
+patterns are important because they substantiate broader trends within
+fisheries management; certain species are subject to the bulk of
+over-fishing concerns because of their marketability to consumers.
+Therefore, addressing over-fishing concerns and pursuing education and
+engagement efforts may be most effectively targeted at only a handful of
+species.
+
+Second, respondents noted some preference for wild-caught seafood across
+all species, though many respondents noted that they didn't have a
+preference between wild-caught and farmed seafood. The preference for
+wild-caught seafood was stronger for species respondents tend to consume
+less often, meanwhile a lack of preference was more prevalent for
+species respondents consumed more often. These results have bearing on
+education efforts surrounding the pros and cons and relative
+sustainability of farmed versus wild-caught seafood.
+
+Third, respondents associated different qualities more and less heavily
+with farmed and wild-caught seafood. For instance, respondents tend to
+think of wild-caught seafood as more associated with tastiness,
+freshness, safety, and health. Furthermore, respondents associate
+wild-caught seafood with local culture, local economies, etc. Meanwhile,
+Respondents identified farmed seafood as having a stronger relationship
+with sustainability, easy access, and affordability. The association
+respondents have between farmed seafood and sustainability is
+particularly interesting and reflects a substantial opportunity for
+education \& outreach. Furthermore, respondents prioritize qualities
+such as safety, tastiness, freshness, and health but don't prioritize
+whether the seafood is framed or wild-caught. Again, these priorities
+are worthy of further exploration.
+
+Finally, statistical analysis substantiates this visual inspection of
+the data; it indicates that respondents most heavily associate the
+qualities of taste, health, and local with wild-caught seafood.
+Furthermore, statistical analysis indicates that political party plays a
+statistically significant role in determining if a respondent
+prioritizes health in seafood selection. Respondents with some level of
+college education place a higher value on health.
+
 \newpage
 
 \hypertarget{references}{%
 \section{References}\label{references}}
 
-\textless add references here if relevant, otherwise delete this
-section\textgreater{}
+Pauly, D., \& Zeller, D. (2016). Catch reconstructions reveal that
+global marine fisheries catches are higher than reported and declining.
+Nature Communications,7(1), pp 1-9.
 
 \end{document}

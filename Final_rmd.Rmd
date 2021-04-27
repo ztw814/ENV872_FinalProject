@@ -5,8 +5,8 @@ output:
     fig_caption: yes
     number_sections: yes
 geometry: margin=2.54cm
-title: "Insert title of project here"
-subtitle: "Web address for GitHub repository"
+title: "Feelings about fish: An analysis of social survey results about seafood"
+subtitle: "https://github.com/ztw814/ENV872_FinalProject"
 author: "Zoe Wong, Molly Bruce"
 fontsize: 12pt
 mainfont: Times New Roman
@@ -15,8 +15,6 @@ mainfont: Times New Roman
 
 \newpage
 \tableofcontents 
-\newpage
-\listoftables 
 \newpage
 \listoffigures 
 \newpage
@@ -48,7 +46,7 @@ survey.dat <- read.csv("./Data/Raw/AquacultureSurveyData.csv")
 
 # Rationale and Research Questions
 
-
+According to catch reconstructions, global fishing rates peaked in 1996 at roughly 130 million tons of fished biomass or, according to reported catches, at roughly 85 million tons that same year (Pauly & Zeller 2016). In the wake of this peak and an accompanying recognition that seafood extraction remains unsustainable, many researchers have become increasingly interested in understanding how communities interact with seafood consumption, seafood sustainability, etc. Understanding how consumers and communities interact with seafood and sustainability concepts is the first, crucial step in beginning to to make more comprehensive progress toward achieving sustainable seafood extraction. This background sets the stage for both this data examination as well as the original research that collected the data on which this examination relies.
 
 ## Research Questions
 
@@ -121,9 +119,9 @@ Political party | 1=Republican | 449
 
 # Exploratory Analysis 
 
- [explanatory text]
+Below, we explore and visualize how often respondents consume select seafood products, regardless of the seafood species.
  
-```{r freq general}
+```{r freq general, fig.cap= "Bar plot of the frequency of general seafood consumption"}
 freq.gen <- as.data.frame(table(survey.dat$Frequency_General))
 freq.gen <- freq.gen %>% 
   rename(Response = Var1) %>% 
@@ -146,11 +144,9 @@ ggplot(data = freq.gen, aes(x = Response, y = Freq)) +
         plot.title = element_text(hjust=0.5))
 
 ```
-freq.general mean = 4.76
 
 
-- map of counties where respondents live?
-
+Figure 1 shows the distribution of responses regarding frequency of seafood consumption in the last year.  The mean frequency reported for all seafood consumption was 4.76.  This means that the average respondent ate seafood between once a month and a few times per month.
 
 
 \newpage
@@ -161,9 +157,14 @@ freq.general mean = 4.76
 
 ## Question 1a: When consumers buy seafood, which species do they prefer? 
 
+Figure 2 shows that respondents tend to eat Shrimp, Tuna, and Salmon more often than they eat the other species. Respondents overwhelmingly never eat Mullet. Respondents seem to eat Blue Crab, Clams, and Oysters very infrequently if ever. However,  this information is still pulled apart by frequency. The below visualization simplifies the data even further, capturing the number of respondents who ever consume each species. 
+
 ```{r freq violin, fig.cap = "Violin plot and means of the frequency of seafood consumption based on type"}
 # Selecting the relevant columns from the raw data frame
 freq.sp <- select(survey.dat, Frequency_Tuna:Frequency_Oysters)
+
+write.csv(freq.sp, row.names = FALSE, 
+          file = "./Data/Processed/seafood.frequency.species.csv")
 
 # Wrangling data for violin plot using pivot_longer
 freq.sp.pivot <- freq.sp %>% 
@@ -188,14 +189,14 @@ freq.sp.mean <- freq.sp %>%
          Frequency_Clams = Frequency_Clams + 1,
          Frequency_Mullet = Frequency_Mullet + 1,
          Frequency_Oysters = Frequency_Oysters + 1) %>% 
-  summarize(Tuna = mean(Frequency_Tuna),
-            Shrimp = mean(Frequency_Shrimp),
-            Salmon = mean(Frequency_Salmon),
-            Flounder = mean(Frequency_Flounder),
-            BlueCrab = mean(Frequency_BlueCrab),
-            Clams = mean(Frequency_Clams),
-            Mullet = mean(Frequency_Mullet),
-            Oysters = mean(Frequency_Oysters)) %>% 
+  summarize(Tuna = round(mean(Frequency_Tuna), 2),
+            Shrimp = round(mean(Frequency_Shrimp),2),
+            Salmon = round(mean(Frequency_Salmon),2),
+            Flounder = round(mean(Frequency_Flounder),2),
+            BlueCrab = round(mean(Frequency_BlueCrab),2),
+            Clams = round(mean(Frequency_Clams),2),
+            Mullet = round(mean(Frequency_Mullet),2),
+            Oysters = round(mean(Frequency_Oysters),2)) %>% 
   pivot_longer(Tuna:Oysters, names_to = "Species", values_to = "Mean")
 
 freq.pivot.violin <- ggplot() +
@@ -209,8 +210,6 @@ freq.pivot.violin <- ggplot() +
 freq.pivot.violin
 
 ```
-
-Based on this analysis, it appears as though respondents tended to eat shrimp more than the other species and tended to eat mullet less than the other species. However, the manner in which the chart conveys the information masks some of the detail. With that in mind, we explore other means of rendering the data. 
 
 
 
@@ -289,17 +288,6 @@ freq.Oysters.bar <- ggplot(freq.sp.Oysters, aes(y = Var1, x = Freq)) +
 plot_grid(freq.Tuna.bar, freq.Shrimp.bar, freq.Salmon.bar, freq.Flounder.bar, freq.BlueCrab.bar, freq.Clams.bar, freq.Mullet.bar, freq.Oysters.bar, ncol = 2)
 
 ```
-This revised means of conveying the data does a much clearer job of showing that respondents tend to eat Shrimp, Tuna, and Salmon more often than they eat the other species. Respondents overwhelmingly never eat Mullet. Respondents seem to eat Blue Crab, Clams, and Oysters very infrequently if ever. However,  this information is still pulled apart by frequency. The below visualization simplifies the data even further, capturing the number of respondents who ever consume each species. 
-
-
-
-
-[explanation etc]
-
-
-
-
-
 
 
 
@@ -308,6 +296,9 @@ This revised means of conveying the data does a much clearer job of showing that
 ```{r preference, fig.height=8, fig.cap="Do you prefer wild-caught or farmed versions of these seafood?"}
 # Selecting the relevant columns from the raw data frame
 pref.sp <- select(survey.dat, Preference_Tuna:Preference_Oysters)
+
+write.csv(pref.sp, row.names = FALSE, 
+          file = "./Data/Processed/seafood.preferences.species.csv")
 
 # Frequency of each response per seafood type
 pref.sp.Tuna <- as.data.frame(table(pref.sp$Preference_Tuna))
@@ -390,10 +381,10 @@ plot_grid(pref.Tuna.bar, pref.Shrimp.bar, pref.Salmon.bar, pref.Flounder.bar, pr
 
 On the whole, respondents seem to have some degree of preference for wild caught seafood or don't have any preference between wild caught and farmed seafood. However, very few respondents identified any degree of preference for farmed fish. 
 
-The species-specific barplots do a clear job of showing that the preference trends remain relatively uniform across all species but with a couple interesting points. For those species that respondents said they consumed less often, Mullet and Blue Crab, respondents showed a larger "stronger preference for wild caught." Meanwhile, for those species that respondents said they consumed more often, Tuna, Shrimp, and Salmon, respondents identified "no preference" between farmed and wild-caught a little more readily. 
+Figure 3 does a clear job of showing that the preference trends remain relatively uniform across all species but with a couple interesting points. For those species that respondents said they consumed less often, Mullet and Blue Crab, respondents showed a larger "stronger preference for wild caught." Meanwhile, for those species that respondents said they consumed more often, Tuna, Shrimp, and Salmon, respondents identified "no preference" between farmed and wild-caught a little more readily. 
 
 
-
+\newpage
 
 
 ## Question 2a: What qualities do consumers associate with seafood?  
@@ -401,6 +392,9 @@ The species-specific barplots do a clear job of showing that the preference tren
 ```{r qualities, fig.height = 9, fig.cap="How do you associate the following qualities with wild vs. farmed seafood?"}
 # Selecting the relevant columns from the raw data frame
 qual.sp <- select(survey.dat, Qualities_Healthy:Qualities_Fresh)
+
+write.csv(qual.sp, row.names = FALSE, 
+          file = "./Data/Processed/seafood.qualities.csv")
 
 # Frequency of each response per quality
 qual.sp.Healthy <- as.data.frame(table(qual.sp$Qualities_Healthy))
@@ -504,9 +498,7 @@ qual.Fresh.bar <- ggplot(qual.sp.Fresh, aes(y = Var1, x = Freq)) +
 plot_grid(qual.Tasty.bar, qual.Fresh.bar, qual.Healthy.bar, qual.Safe.bar, qual.Sustainable.bar, qual.Affordable.bar, qual.Easy_Access.bar, qual.Local.bar, qual.Local_Culture.bar, qual.Local_Economies.bar, qual.Local_Environments.bar, ncol = 2)
 ```
 
-There is quite the spread in associations of particular qualities with farmed or wild-caught seafood. Given this spread and the challenges with parsing apart the data in this format, we explore a different way of visualizing data below. 
-
-This means of rendering the data shows that folks tend to associate tasty, fresh, safe, healthy, and the various local categories more heavily with wild-caught seafood. However, respondents tent to associate sustainability, easy access, and affordability more heavily with farmed seafood. 
+There is quite the spread in associations of particular qualities with farmed or wild-caught seafood, as shown in figure 4. Specifically, it seems as though respondents tend to associate tasty, fresh, safe, healthy, and the various local categories more heavily with wild-caught seafood. However, respondents tent to associate sustainability, easy access, and affordability more heavily with farmed seafood.
 
 
 
@@ -527,6 +519,9 @@ importance <- survey.dat %>%
          Environment = Importance_Local_Environments,
          Fresh = Importance_Fresh,
          Age = Age_corrected)
+
+write.csv(importance, row.names = FALSE, 
+          file = "./Data/Processed/seafood.importance.csv")
 
 columnnames <- c("Age", "Education", "Political_Party")
 importance[columnnames] <- lapply(importance[columnnames], factor)
@@ -555,16 +550,15 @@ ggplot(import.summary, aes(x = Value, y = Mean)) +
        x = "Values")
 ```
 
-Here, we can see that respondents prioritized certain qualities like safety, tastiness, freshness, and healthiness of the seafood but didn't seem to place as much emphasis on other qualities like whether the seafood was farmed or wild.
+In figure 5, we can see that respondents prioritized certain qualities like safety, tastiness, freshness, and healthiness of the seafood but didn't seem to place as much emphasis on other qualities like whether the seafood was farmed or wild.
 
 
 
-
+\newpage
 
 
 ## Question 3: Are valued seafood qualities predicted by demographic variables such as age or education level?
 
-Fresh tasty healthy local - qualities most associated with wild
 
 ```{r}
 # Creating separate dataframes per variable to eliminate unwanted rows
@@ -581,55 +575,74 @@ demo.party <- importance %>%
 
 ```{r fresh demo}
 fresh.lm.age <- lm(data = demo.age, Fresh ~ Age)
-summary(fresh.lm.age) 
+#summary(fresh.lm.age) 
 
 fresh.lm.education <- lm(data = demo.ed, Fresh ~ Education)
-summary(fresh.lm.education)
+#summary(fresh.lm.education)
 
 fresh.lm.political <- lm(data = demo.party, Fresh ~ Political_Party)
-summary(fresh.lm.political)
+#summary(fresh.lm.political)
 ```
 
 ```{r local}
 local.lm.age <- lm(data = demo.age, Local ~ Age)
-summary(local.lm.age) #age 6 cares slightly more
+#summary(local.lm.age) 
 
 local.lm.education <- lm(data = demo.ed, Local ~ Education)
-summary(local.lm.education) # ed3 significant
+#summary(local.lm.education) 
 
 local.lm.political <- lm(data = demo.party, Local ~ Political_Party)
-summary(local.lm.political) # no significance
+#summary(local.lm.political) 
 ```
 
 ```{r tasty}
 tasty.lm.age <- lm(data = demo.age, Tasty ~ Age)
-summary(tasty.lm.age) #age 6 cares slightly more
+#summary(tasty.lm.age) 
 
 tasty.lm.education <- lm(data = demo.ed, Tasty ~ Education)
-summary(tasty.lm.education) # ed3 significant
+#summary(tasty.lm.education) 
 
 tasty.lm.political <- lm(data = demo.party, Tasty ~ Political_Party)
-summary(tasty.lm.political) # no significance
+#summary(tasty.lm.political) 
 ```
 
 ```{r healthy}
 health.lm.age <- lm(data = demo.age, Health ~ Age)
-summary(health.lm.age) #age 6 cares slightly more
+#summary(health.lm.age) 
 
 health.lm.education <- lm(data = demo.ed, Health ~ Education)
-summary(health.lm.education) # ed3 significant
+#summary(health.lm.education) 
 
 health.lm.political <- lm(data = demo.party, Health ~ Political_Party)
-summary(health.lm.political) # no significance
+#summary(health.lm.political) 
 ```
+
+Age is a predictor of the value respondents placed on the freshness if their seafood, with folks older than 19 placing more value on the freshness of their seafood. The low p-value (<.05) indicates that this association is statistically significant. However, the low r squared value means that age explains only ~3.69% of the variability in the data. Education is also a predictor of how a respondent values freshness. The low p-value again indicates that this association is statistically significant, though the r squared of 2.07% means that it doesn’t explain much variability in the data. Political party is not a significant predictor of the value a respondent places on the freshness of their seafood as told by the high p-value of .4211.  
+
+Age is a predictor of the value respondents placed on the local nature of their seafood. The low p-value (<.05) indicates that this association is statistically significant. However, the low r squared value means that age explains only ~1.78% of the variability in the data. Education is also a predictor of how a respondent values the local nature of their seafood. The low p-value again indicates that this association is statistically significant, though the r squared of 1.48% means that it doesn’t explain much variability in the data. Political party is not a significant predictor of the value a respondent places on the local nature of their seafood as told by the high p-value of .2403.  
+
+Age is a predictor of the value respondents placed on the taste of their seafood. The low p-value (<.05) indicates that this association is statistically significant. However, the low r squared value means that age explains only ~1.41% of the variability in the data. Education is also a predictor of how a respondent values the taste of their seafood. The low p-value again indicates that this association is statistically significant, though the r squared of 0.98% means that it doesn’t explain much variability in the data. Political party is not a significant predictor of the value a respondent places on the taste of their seafood as told by the high p-value of .1333.  
+
+Age overall was not a significant predictor of how respondents valued health (p>0.05).  However, the age ranges of 50-59 and 60-69 were significant and the estimates were positive, indicating that respondents in these age ranges valued health as a quality of seafood more than teenagers.  Education was a significant predictor of how respondents valued health (p = 0.007).  All estimates were positive, indicating that a high school education or more predicted that respondents would value health in their seafood more highly.  Political party was not a significant predictor of how respondents valued health (p>0.05).
 
 
 \newpage
 
 # Summary and Conclusions
 
+This analysis communicates several key findings--findings that (1) should inform future inquiries as researchers aim to better understand community and consumer understandings of seafood and sustainability issues, and (2) may help researchers make positive strides toward pursuing education and engagement efforts on these issues.
+
+First, respondents tend to consume certain species of seafood in larger volumes and at higher frequencies than other species. Shrimp, Tuna, and Salmon top the list. Meanwhile, respondents do not consume as much Mullet, Blue Crab, Oyster, or Clams. These consumption practices and patterns are important because they substantiate broader trends within fisheries management; certain species are subject to the bulk of over-fishing concerns because of their marketability to consumers. Therefore, addressing over-fishing concerns and pursuing education and engagement efforts may be most effectively targeted at only a handful of species. 
+
+Second, respondents noted some preference for wild-caught seafood across all species, though many respondents noted that they didn't have a preference between wild-caught and farmed seafood. The preference for wild-caught seafood was stronger for species respondents tend to consume less often, meanwhile a lack of preference was more prevalent for species respondents consumed more often. These results have bearing on education efforts surrounding the pros and cons and relative sustainability of farmed versus wild-caught seafood.  
+
+Third, respondents associated different qualities more and less heavily with farmed and wild-caught seafood. For instance, respondents tend to think of wild-caught seafood as more associated with tastiness, freshness, safety, and health. Furthermore, respondents associate wild-caught seafood with local culture, local economies, etc. Meanwhile, Respondents identified farmed seafood as having a stronger relationship with sustainability, easy access, and affordability. The association respondents have between farmed seafood and sustainability is particularly interesting and reflects a substantial opportunity for education & outreach. Furthermore, respondents prioritize qualities such as safety, tastiness, freshness, and health but don't prioritize whether the seafood is framed or wild-caught. Again, these priorities are worthy of further exploration. 
+
+Finally, statistical analysis substantiates this visual inspection of the data; it indicates that respondents most heavily associate the qualities of taste, health, and local with wild-caught seafood. Furthermore, statistical analysis indicates that political party plays a statistically significant role in determining if a respondent prioritizes health in seafood selection. Respondents with some level of college education place a higher value on health.
+
 
 \newpage
 
 # References
-<add references here if relevant, otherwise delete this section> 
+
+Pauly, D., & Zeller, D. (2016). Catch reconstructions reveal that global marine fisheries catches are higher than reported and declining. Nature Communications,7(1), pp 1-9.

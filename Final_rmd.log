@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.3.30)  26 APR 2021 13:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.3.30)  26 APR 2021 20:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -425,24 +425,24 @@ File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
 ) (./Final_rmd.aux)
 \openout1 = `Final_rmd.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
 
 (c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopd
 f-base.sty
@@ -455,7 +455,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 90.
+Package hyperref Info: Link coloring OFF on input line 91.
 
 (c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -470,9 +470,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count292
 )
-LaTeX Info: Redefining \ref on input line 90.
-LaTeX Info: Redefining \pageref on input line 90.
-LaTeX Info: Redefining \nameref on input line 90.
+LaTeX Info: Redefining \ref on input line 91.
+LaTeX Info: Redefining \pageref on input line 91.
+LaTeX Info: Redefining \nameref on input line 91.
 (./Final_rmd.out) (./Final_rmd.out)
 \@outlinefile=\write3
 \openout3 = `Final_rmd.out'.
@@ -512,37 +512,37 @@ LaTeX Info: Redefining \nameref on input line 90.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 9
-2.
+3.
 (c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 9
-2.
+3.
 (c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-92.
+93.
 (c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-92.
+93.
 (c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 92.
+(Font)              <14.4> on input line 93.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 92.
+(Font)              <10> on input line 93.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 92.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 92.
+(Font)              <7> on input line 93.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 93.
 
 (c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 92.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 93.
 
 (c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -560,112 +560,88 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 \tf@toc=\write4
 \openout4 = `Final_rmd.toc'.
 
-[2] (./Final_rmd.lot)
-\tf@lot=\write5
-\openout5 = `Final_rmd.lot'.
+[2] (./Final_rmd.lof)
+\tf@lof=\write5
+\openout5 = `Final_rmd.lof'.
 
-[3] (./Final_rmd.lof)
-\tf@lof=\write6
-\openout6 = `Final_rmd.lof'.
-
-[4] [5]
-Overfull \hbox (12.00003pt too wide) in alignment at lines 190--202
+[3] [4]
+Overfull \hbox (12.00003pt too wide) in alignment at lines 203--215
  [] [] [] 
  []
 
 
-Overfull \hbox (12.00003pt too wide) in alignment at lines 202--252
+Overfull \hbox (12.00003pt too wide) in alignment at lines 215--265
  [] [] [] 
  []
 
-[6] [7] [8]
+[5] [6] [7]
 <Final_rmd_files/figure-latex/freq general-1.pdf, id=148, 469.755pt x 325.215pt
 >
 File: Final_rmd_files/figure-latex/freq general-1.pdf Graphic file (type pdf)
 <use Final_rmd_files/figure-latex/freq general-1.pdf>
 Package pdftex.def Info: Final_rmd_files/figure-latex/freq general-1.pdf  used 
-on input line 301.
+on input line 317.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 301--303
-[][]
- []
-
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 3
-07.
-(c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
-File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [9 <./Final_rmd_files/figure-latex/freq general-1.pdf>]
-<Final_rmd_files/figure-latex/freq violin-1.pdf, id=160, 469.755pt x 325.215pt>
+[8 <./Final_rmd_files/figure-latex/freq general-1.pdf>]
+<Final_rmd_files/figure-latex/freq violin-1.pdf, id=159, 469.755pt x 325.215pt>
 
 File: Final_rmd_files/figure-latex/freq violin-1.pdf Graphic file (type pdf)
 <use Final_rmd_files/figure-latex/freq violin-1.pdf>
 Package pdftex.def Info: Final_rmd_files/figure-latex/freq violin-1.pdf  used o
-n input line 322.
+n input line 346.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<Final_rmd_files/figure-latex/frequency-1.pdf, id=161, 469.755pt x 578.16pt>
+<Final_rmd_files/figure-latex/frequency-1.pdf, id=160, 469.755pt x 578.16pt>
 File: Final_rmd_files/figure-latex/frequency-1.pdf Graphic file (type pdf)
 <use Final_rmd_files/figure-latex/frequency-1.pdf>
 Package pdftex.def Info: Final_rmd_files/figure-latex/frequency-1.pdf  used on 
-input line 333.
+input line 353.
 (pdftex.def)             Requested size: 469.75386pt x 578.15858pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 333--341
-[][]
- []
-
-[10 <./Final_rmd_files/figure-latex/freq violin-1.pdf>] [11 <./Final_rmd_files/
-figure-latex/frequency-1.pdf>]
-<Final_rmd_files/figure-latex/preference-1.pdf, id=182, 469.755pt x 578.16pt>
+<Final_rmd_files/figure-latex/preference-1.pdf, id=161, 469.755pt x 578.16pt>
 File: Final_rmd_files/figure-latex/preference-1.pdf Graphic file (type pdf)
 <use Final_rmd_files/figure-latex/preference-1.pdf>
 Package pdftex.def Info: Final_rmd_files/figure-latex/preference-1.pdf  used on
- input line 350.
+ input line 363.
 (pdftex.def)             Requested size: 469.75386pt x 578.15858pt.
-<Final_rmd_files/figure-latex/qualities-1.pdf, id=183, 469.755pt x 650.43pt>
+[9 <./Final_rmd_files/figure-latex/freq violin-1.pdf>] [10 <./Final_rmd_files/f
+igure-latex/frequency-1.pdf>] [11 <./Final_rmd_files/figure-latex/preference-1.
+pdf>] [12]
+<Final_rmd_files/figure-latex/qualities-1.pdf, id=196, 469.755pt x 650.43pt>
 File: Final_rmd_files/figure-latex/qualities-1.pdf Graphic file (type pdf)
 <use Final_rmd_files/figure-latex/qualities-1.pdf>
 Package pdftex.def Info: Final_rmd_files/figure-latex/qualities-1.pdf  used on 
-input line 374.
+input line 389.
 (pdftex.def)             Requested size: 469.75386pt x 650.4284pt.
 
-LaTeX Warning: Float too large for page by 26.83134pt on input line 377.
+LaTeX Warning: Float too large for page by 26.83134pt on input line 392.
 
-<Final_rmd_files/figure-latex/importance-1.pdf, id=184, 469.755pt x 325.215pt>
+<Final_rmd_files/figure-latex/importance-1.pdf, id=197, 469.755pt x 325.215pt>
 File: Final_rmd_files/figure-latex/importance-1.pdf Graphic file (type pdf)
 <use Final_rmd_files/figure-latex/importance-1.pdf>
 Package pdftex.def Info: Final_rmd_files/figure-latex/importance-1.pdf  used on
- input line 396.
+ input line 407.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
-12.
-(c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [12] [13 <./Final_rmd_files/figure-latex/preference-1.pdf>] [14 <./Final_rmd_
-files/figure-latex/qualities-1.pdf>] [15 <./Final_rmd_files/figure-latex/import
-ance-1.pdf>] [16] [17] [18] [19] [20] [21] [22] [23] (./Final_rmd.aux)
+[13] [14 <./Final_rmd_files/figure-latex/qualities-1.pdf>] [15 <./Final_rmd_fil
+es/figure-latex/importance-1.pdf>] [16] [17] [18] (./Final_rmd.aux)
 Package rerunfilecheck Info: File `Final_rmd.out' has not changed.
 (rerunfilecheck)             Checksum: 7D58C4DDE3C6FA9247B858C430EC82C4;3958.
  ) 
 Here is how much of TeX's memory you used:
- 10655 strings out of 481008
- 156340 string characters out of 5907938
- 466100 words of memory out of 5000000
- 27569 multiletter control sequences out of 15000+600000
- 449752 words of font info for 68 fonts, out of 8000000 for 9000
+ 10572 strings out of 481008
+ 154704 string characters out of 5907938
+ 464388 words of memory out of 5000000
+ 27501 multiletter control sequences out of 15000+600000
+ 449059 words of font info for 66 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 71i,6n,74p,687b,480s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,6n,74p,687b,440s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
-}{c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc
 }<c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.
 pfb><c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr1
 2.pfb><c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lm
-r17.pfb><c:/Users/Zoe/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/
-lmtt12.pfb>
-Output written on Final_rmd.pdf (23 pages, 205620 bytes).
+r17.pfb>
+Output written on Final_rmd.pdf (18 pages, 179746 bytes).
 PDF statistics:
- 293 PDF objects out of 1000 (max. 8388607)
- 249 compressed objects within 3 object streams
- 70 named destinations out of 1000 (max. 500000)
+ 268 PDF objects out of 1000 (max. 8388607)
+ 230 compressed objects within 3 object streams
+ 66 named destinations out of 1000 (max. 500000)
  159 words of extra memory for PDF output out of 10000 (max. 10000000)
 
