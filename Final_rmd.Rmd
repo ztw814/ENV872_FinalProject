@@ -179,6 +179,25 @@ freq.sp.pivot <- freq.sp %>%
   # Eliminating 0s
   mutate(Response = Response + 1)
 
+freq.sp.mean <- freq.sp %>% 
+  mutate(Frequency_Tuna = Frequency_Tuna + 1,
+         Frequency_Shrimp = Frequency_Shrimp + 1,
+         Frequency_Salmon = Frequency_Salmon + 1,
+         Frequency_Flounder = Frequency_Flounder + 1,
+         Frequency_BlueCrab = Frequency_BlueCrab + 1,
+         Frequency_Clams = Frequency_Clams + 1,
+         Frequency_Mullet = Frequency_Mullet + 1,
+         Frequency_Oysters = Frequency_Oysters + 1) %>% 
+  summarize(Tuna = mean(Frequency_Tuna),
+            Shrimp = mean(Frequency_Shrimp),
+            Salmon = mean(Frequency_Salmon),
+            Flounder = mean(Frequency_Flounder),
+            BlueCrab = mean(Frequency_BlueCrab),
+            Clams = mean(Frequency_Clams),
+            Mullet = mean(Frequency_Mullet),
+            Oysters = mean(Frequency_Oysters)) %>% 
+  pivot_longer(Tuna:Oysters, names_to = "Species", values_to = "Mean")
+
 freq.pivot.violin <- ggplot() +
   geom_violin(data = freq.sp.pivot, aes(x = Species, y = Response)) +
   geom_point(data = freq.sp.mean, aes(x = Species, y = Mean), size = 3) +

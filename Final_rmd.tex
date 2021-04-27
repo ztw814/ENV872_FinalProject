@@ -298,12 +298,11 @@ Political party & 1=Republican & 449\tabularnewline
 
 {[}explanatory text{]}
 
+\includegraphics{Final_rmd_files/figure-latex/freq general-1.pdf}
 freq.general mean = 4.76
 
 \begin{itemize}
 \tightlist
-\item
-  frequency general?
 \item
   map of counties where respondents live?
 \end{itemize}
@@ -318,33 +317,27 @@ freq.general mean = 4.76
 they
 prefer?}\label{question-1a-when-consumers-buy-seafood-which-species-do-they-prefer}}
 
-\begin{longtable}[]{@{}lr@{}}
-\caption{Mean response: How often do you eat the following type of
-seafood?}\tabularnewline
-\toprule
-Species & Mean\tabularnewline
-\midrule
-\endfirsthead
-\toprule
-Species & Mean\tabularnewline
-\midrule
-\endhead
-Tuna & 3.25\tabularnewline
-Shrimp & 3.99\tabularnewline
-Salmon & 3.02\tabularnewline
-Flounder & 2.69\tabularnewline
-BlueCrab & 2.14\tabularnewline
-Clams & 2.07\tabularnewline
-Mullet & 1.45\tabularnewline
-Oysters & 2.22\tabularnewline
-\bottomrule
-\end{longtable}
-
+\begin{figure}
+\centering
 \includegraphics{Final_rmd_files/figure-latex/freq violin-1.pdf}
+\caption{Violin plot and means of the frequency of seafood consumption
+based on type}
+\end{figure}
 
-\includegraphics{Final_rmd_files/figure-latex/frequency-1.pdf}
+Based on this analysis, it appears as though respondents tended to eat
+shrimp more than the other species and tended to eat mullet less than
+the other species. However, the manner in which the chart conveys the
+information masks some of the detail. With that in mind, we explore
+other means of rendering the data.
 
-{[}explanation of frequency findings. also add fig.cap above{]}
+\includegraphics{Final_rmd_files/figure-latex/frequency-1.pdf} This
+revised means of conveying the data does a much clearer job of showing
+that respondents tend to eat Shrimp, Tuna, and Salmon more often than
+they eat the other species. Respondents overwhelmingly never eat Mullet.
+Respondents seem to eat Blue Crab, Clams, and Oysters very infrequently
+if ever. However, this information is still pulled apart by frequency.
+The below visualization simplifies the data even further, capturing the
+number of respondents who ever consume each species.
 
 {[}explanation etc{]}
 
@@ -352,23 +345,62 @@ Oysters & 2.22\tabularnewline
 \subsubsection{Question 1b: Do consumers prefer wild or farmed
 fish?}\label{question-1b-do-consumers-prefer-wild-or-farmed-fish}}
 
+\begin{figure}
+\centering
 \includegraphics{Final_rmd_files/figure-latex/preference-1.pdf}
+\caption{Do you prefer wild-caught or farmed versions of these seafood?}
+\end{figure}
 
-{[}explanation of findings. also add fig.cap above{]}
+On the whole, respondents seem to have some degree of preference for
+wild caught seafood or don't have any preference between wild caught and
+farmed seafood. However, very few respondents identified any degree of
+preference for farmed fish.
+
+The species-specific barplots do a clear job of showing that the
+preference trends remain relatively uniform across all species but with
+a couple interesting points. For those species that respondents said
+they consumed less often, Mullet and Blue Crab, respondents showed a
+larger ``stronger preference for wild caught.'' Meanwhile, for those
+species that respondents said they consumed more often, Tuna, Shrimp,
+and Salmon, respondents identified ``no preference'' between farmed and
+wild-caught a little more readily.
 
 \hypertarget{question-2a-what-qualities-do-consumers-associate-with-seafood}{%
 \subsection{Question 2a: What qualities do consumers associate with
 seafood?}\label{question-2a-what-qualities-do-consumers-associate-with-seafood}}
 
+\begin{figure}
+\centering
 \includegraphics{Final_rmd_files/figure-latex/qualities-1.pdf}
+\caption{How do you associate the following qualities with wild
+vs.~farmed seafood?}
+\end{figure}
 
-{[}explanation of findings. also add fig.cap above{]}
+There is quite the spread in associations of particular qualities with
+farmed or wild-caught seafood. Given this spread and the challenges with
+parsing apart the data in this format, we explore a different way of
+visualizing data below.
+
+This means of rendering the data shows that folks tend to associate
+tasty, fresh, safe, healthy, and the various local categories more
+heavily with wild-caught seafood. However, respondents tent to associate
+sustainability, easy access, and affordability more heavily with farmed
+seafood.
 
 \hypertarget{question-2b-what-qualities-do-consumers-value-in-seafood}{%
 \subsection{Question 2b: What qualities do consumers value in
 seafood?}\label{question-2b-what-qualities-do-consumers-value-in-seafood}}
 
+\begin{figure}
+\centering
 \includegraphics{Final_rmd_files/figure-latex/importance-1.pdf}
+\caption{How important are the following qualities?}
+\end{figure}
+
+Here, we can see that respondents prioritized certain qualities like
+safety, tastiness, freshness, and healthiness of the seafood but didn't
+seem to place as much emphasis on other qualities like whether the
+seafood was farmed or wild.
 
 \hypertarget{question-3-are-valued-seafood-qualities-predicted-by-demographic-variables-such-as-age-or-education-level}{%
 \subsection{Question 3: Are valued seafood qualities predicted by
@@ -376,21 +408,6 @@ demographic variables such as age or education
 level?}\label{question-3-are-valued-seafood-qualities-predicted-by-demographic-variables-such-as-age-or-education-level}}
 
 Fresh tasty healthy local - qualities most associated with wild
-
-\begin{verbatim}
-##    1    2    3    4    5    6    7    8 NA's 
-##   74  201  170  159  156  172  100    8  396
-\end{verbatim}
-
-\begin{verbatim}
-##   1   2   3   4   5   6   7   8 
-##  35 229 302 167 382 260  49  12
-\end{verbatim}
-
-\begin{verbatim}
-##   1   2   3   4   5 
-## 449 459 384  28 116
-\end{verbatim}
 
 \begin{verbatim}
 ## 
